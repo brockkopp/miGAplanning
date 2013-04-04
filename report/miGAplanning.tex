@@ -1,45 +1,50 @@
-\documentclass[twoside]{article}
+\documentclass[twoside,letter,10pt]{article}
 
 \usepackage{lipsum} % Package to generate dummy text throughout this template
 
-\usepackage[sc]{mathpazo} % Use the Palatino font
-\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
-\linespread{1.05} % Line spacing - Palatino needs more space between lines
-\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+%%% FONT ADJUSTMENTS %%%
+\usepackage[sc]{mathpazo} 	% Use the Palatino font
+\usepackage[T1]{fontenc} 	% Use 8-bit encoding that has 256 glyphs
+\linespread{1.05} 			% Line spacing - Palatino needs more space between lines
+\usepackage{microtype} 		% Slightly tweak font spacing for aesthetics
 
+%%% MARGIN ADJUSTMENTS %%%
 \usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
 \usepackage{multicol} % Used for the two-column layout of the document
 \usepackage[hidelinks]{hyperref} % For hyperlinks in the PDF
 
+%%% FORMATTING ADJUSTMENTS %%%
 \usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
 \usepackage{booktabs} % Horizontal rules in tables
 \usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
-
-\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
 \usepackage{paralist} % Used for the compactitem environment which makes bullet points with less space between them
+\setlength\parindent{0pt}
 
 \usepackage{abstract} % Allows abstract customization
 \renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
 \renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+\setlength{\absleftindent}{0mm}
+\setlength{\absrightindent}{0mm}
 
 \usepackage{titlesec} % Allows customization of titles
 \renewcommand\thesection{\Roman{section}}
-\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\section}[block]{\large\scshape}{\thesection.}{1em}{} % Change the look of the section titles
 
-\setlength\parindent{0pt}
+\newcommand{\Keywords}{Genertic Algorithms, Curve Fitting, Path Planning, Grid Method, Robotics}
 
+%%% HEADER SETUP %%%
 \usepackage{fancyhdr} % Headers and footers
 \pagestyle{fancy} % All pages have headers and footers
 \fancyhead{} % Blank out the default header
 \fancyfoot{} % Blank out the default footer
-\fancyhead[C]{} %Running title $\bullet$ November 2012 $\bullet$ Vol. XXI, No. 1} % Custom header text
+\fancyhead[C]{SYDE 422 - Machine Intelligence \hspace{3mm} $\bullet$ \hspace{3mm}April 2013 \hspace{3mm}$\bullet$ \hspace{3mm}Group 23} % Custom header text
 \fancyfoot[RO,LE]{\thepage} % Custom footer text
 
 %----------------------------------------------------------------------------------------
 %	TITLE SECTION
 %----------------------------------------------------------------------------------------
 
-\title{\vspace{-15mm}\fontsize{24pt}{10pt}\selectfont\textbf{A Motion Planning Method Based on Genertic Algorithms and Curve Fitting Techniques}} % Article title
+\title{\vspace{-15mm}\fontsize{20pt}{10pt}\selectfont\textbf{A Motion Planning Method Based on Genertic Algorithms and Curve Fitting Techniques}} % Article title
 
 \author{
 %	\large
@@ -66,21 +71,23 @@
 
 \thispagestyle{fancy} % All pages have headers and footers
 
+\begin{multicols}{2} % Two-column layout throughout the main article text
+
 %----------------------------------------------------------------------------------------
 %	ABSTRACT
 %----------------------------------------------------------------------------------------
 
 \begin{abstract}
-
 Navigation and path planning are critical components of developing robotic technology. Optimized path planning can improve efficiency and throughput of an industrial robotic manipulator. The path must be planned in a way that will avoid collisions with all obstacles and minimize trajectory path distance while satisfying jerk and other dynamic constraints. The environment is discretized into a grid to allow for easy definition of obstacles and waypoints. Curve fitting techniques are used to define a path around known obstacles in a static environment. A genetic algorithm is then used to optimize the path. The fitness is determined based on trajectory distance as well as proximity to an obstacle. Results are verified against results from a wavefront algorithm. This algorithm may be expanded to 3D problems with considerations on computational efficiency.
-
 \end{abstract}
 
-%----------------------------------------------------------------------------------------
-%	ARTICLE CONTENTS
-%----------------------------------------------------------------------------------------
+\vspace{3mm}
 
-\begin{multicols}{2} % Two-column layout throughout the main article text
+{\bf Keywords:} \textsc{\Keywords} %
+
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION
+%----------------------------------------------------------------------------------------
 
 \section{Introduction}
 
@@ -90,26 +97,27 @@ Path planning techniques can be applied to industrial robotic manipulators to en
 
 As a stochastic optimization technique, a genetic algorithm will find the global optimum for a problem in a reasonable amount of time and computational cost. Due to the evolutionary nature of genetic algorithms, computational time may be greater than other applicable algorithms. However, the robustness of a genetic algorithm, combined with its elegant mechanisms of incorporating all factors of the optimization problem, make it an appealing solution.
 
-The robot’s environment and obstacles will be represented in a discretized grid, and curve fitting techniques will be used to define the optimum path from the start to the end location through the specified environment. The curve fitting method helps simplify and expedite the generation of a desired path, compared to commonly used techniques such as rapidly exploring random trees \cite{rodriguez06}. The genetic approach to curve fitting will select the functional coefficients which result in a curve with the greatest fitness. Fitness will be determined by the constraints of the problem (namely distance and safety).
+The robot's environment and obstacles will be represented in a discretized grid, and curve fitting techniques will be used to define the optimum path from the start to the end location through the specified environment. The curve fitting method helps simplify and expedite the generation of a desired path, compared to commonly used techniques such as rapidly exploring random trees \cite{rodriguez06}. The genetic approach to curve fitting will select the functional coefficients which result in a curve with the greatest fitness. Fitness will be determined by the constraints of the problem (namely distance and safety).
 
 Initial experimentation will be done using lower order splines as suggested paths, but higher-dimensional splines will be studied as well. Extendibility of the suggested approach to 3D environments will be considered. To verify the effectiveness of the algorithm in 2D, the results will be compared to the solution from the wavefront method. The nature of the wavefront algorithm guarantees that it yields the shortest path, but it does not take dynamic constraints into consideration.
 
-%------------------------------------------------
+%----------------------------------------------------------------------------------------
+%	BACKGROUND
+%----------------------------------------------------------------------------------------
 
 \section{Background Review}
 
-Maecenas sed ultricies felis. Sed imperdiet dictum arcu a egestas. 
 Path planning is an active area of research due to the complexity of the problem and the need for a robust solution applicable to various environments. Many algorithms exist, but none of the proposed algorithms are capable of encompassing all the problem constraints for various environments \cite{sariff06}.
 
-Existing path planning solutions include reactive motion planning algorithms, graph and probabilistic based motion planning, and optimization based planning \cite{waslanderI}. Each of these has advantages and disadvantages with regards to planning a route through a robot’s configuration space. Reactive planning algorithms such as potential field and wavefront methods are simple in concept however these are local approach methods and do not consider dynamic constraints. Some are inherently susceptible to local minima, making them unacceptable for obstacle avoidance \cite{koren91}. The wavefront method is designed to find the shortest path, and as such will be used as the benchmark against which results from the suggested algorithm will be measured. It is expected that while the suggested algorithm will generate a longer path, the dynamic constraints will be satisfied unlike in the wavefront solution.
+Existing path planning solutions include reactive motion planning algorithms, graph and probabilistic based motion planning, and optimization based planning \cite{waslanderI}. Each of these has advantages and disadvantages with regards to planning a route through a robot's configuration space. Reactive planning algorithms such as potential field and wavefront methods are simple in concept however these are local approach methods and do not consider dynamic constraints. Some are inherently susceptible to local minima, making them unacceptable for obstacle avoidance \cite{koren91}. The wavefront method is designed to find the shortest path, and as such will be used as the benchmark against which results from the suggested algorithm will be measured. It is expected that while the suggested algorithm will generate a longer path, the dynamic constraints will be satisfied unlike in the wavefront solution.
 
 Graph based planning offers a global approach. Graphs may be generated both deterministically (visibility graphs, cell decomposition, Voronoi diagrams), or randomly (probabilistic roadmaps). [10] Established algorithms (such as Dijkstra's shortest path search) are used to extract the shortest path from the graph \cite{dijkstra59}. However dynamics of the robot are ignored in the generation of the graph, and this is detrimental to the criterion of path smoothness. Challenges also arise when there are restrictive obstacles such as narrow passages, however research in areas such as probabilistic roadmaps (PRMs) offers promising solutions \cite{hsu03}. Optimization based planning offers more confidence in finding a global optimum, however it is hindered by a lack of robustness: a poorly formulated problem may not converge \cite{waslanderIII}. It is also difficult to define obstacles.
 
-In an effort to provide a simple method of avoiding obstacles and defining a path, the manipulator’s configuration space will be discretized using a grid-based approach, and curve fitting techniques will be employed to find the ideal path. Defining the environment with a grid-graph may not be the most effective (cell decomposition offers greater efficiency \cite{lingelbach04}), however it provides a simple way to defined obstacles as well as flexibility in representation. The grid will represent the configuration space for an articulated industrial robot. The grid cell size will define the computational resources required. A tradeoff between resolution in the grid and computational efficiency must be made.
+In an effort to provide a simple method of avoiding obstacles and defining a path, the manipulator's configuration space will be discretized using a grid-based approach, and curve fitting techniques will be employed to find the ideal path. Defining the environment with a grid-graph may not be the most effective (cell decomposition offers greater efficiency \cite{lingelbach04}), however it provides a simple way to defined obstacles as well as flexibility in representation. The grid will represent the configuration space for an articulated industrial robot. The grid cell size will define the computational resources required. A tradeoff between resolution in the grid and computational efficiency must be made.
 
 To define the fitted curve, research has been done using Bézier curves \cite{choi10}. Bézier curves provide smooth paths that guarantee obstacle avoidance. While very effective for lower-dimensional problems, quartic or quintic functions begin to get very computationally expensive. That is why this paper aims to use curve fitting in combination with genetic algorithms to optimize the curve. The curve will be optimized by minimizing distance, maximizing smoothness (minimizing jerk), and ensuring a safe passage around all obstacles. Genetic algorithms are ideal for such complex optimization problems and offer good robustness as well \cite{zou12}.
 
-The father of genetic algorithms, John Holland, modeled this machine intelligence technique after the evolution research by Darwin and the genetic “survival of the fittest” discovered in the natural, biological sphere. There are two natural learning epitomes available: the brain and evolution. Holland was inspired by the fact that the processes of natural evolution and natural genetics have become elucidated over decades of study in biology and molecular biology \cite{goldberg88}. The subtleties of the fundamental mechanisms of the brain, in contrast, are still shrouded in mystery. As such it seems clear to use the better understood model of genetic evolution as a platform for an optimization technique.
+The father of genetic algorithms, John Holland, modeled this machine intelligence technique after the evolution research by Darwin and the genetic ``survival of the fittest'' discovered in the natural, biological sphere. There are two natural learning epitomes available: the brain and evolution. Holland was inspired by the fact that the processes of natural evolution and natural genetics have become elucidated over decades of study in biology and molecular biology \cite{goldberg88}. The subtleties of the fundamental mechanisms of the brain, in contrast, are still shrouded in mystery. As such it seems clear to use the better understood model of genetic evolution as a platform for an optimization technique.
 
 Research has already been done regarding the application of the parallel heuristic search method of genetic algorithms to curve fitting \cite{gulsen95,karr91,ismail08}. The goal is to find the coefficients that will define a path that with optimized path criteria. Thus each chromosome will contain a bitwise representation of each of the coefficient parameters.
 
@@ -117,37 +125,34 @@ Fitness will be determined based on distance as well as proximity to an obstacle
 
 The result will be a global path planning algorithm functional in a static environment. Dynamic environments are possible with the proposed algorithm, however computational efficiency must be optimized in order to minimize the time required to find the solution. This new applications offers a simple way to determine a path while taking into consideration all the path criteria.
 
+%----------------------------------------------------------------------------------------
+%	METHOD
+%----------------------------------------------------------------------------------------
+
 \section{Method}
-\lipsum[1-5] % Dummy text
+\lipsum[1-5]
+
+%----------------------------------------------------------------------------------------
+%	RESULTS
+%----------------------------------------------------------------------------------------
 
 \section{Results}
-\lipsum[1-5] % Dummy text
+\lipsum[1-5]
+
+%----------------------------------------------------------------------------------------
+%	DISCUSSION
+%----------------------------------------------------------------------------------------
 
 \section{Discussion}
 
 \lipsum[1-5]
 
 %----------------------------------------------------------------------------------------
-%	REFERENCE LIST
+%	REFERENCES
 %----------------------------------------------------------------------------------------
 
-%\bibliographystyle{plain}
 \bibliographystyle{ieeetr}
 \bibliography{miGAplanning}
 
-%\begin{thebibliography}{99}
-%
-%\bibitem{lamport94}
-%	Leslie Lamport,
-%	\emph{\LaTeX: A Document Preparation System}.
-%	Addison Wesley, Massachusetts,
-%	2nd Edition,
-%	1994.
-% 
-%\end{thebibliography}
-
-%----------------------------------------------------------------------------------------
-
 \end{multicols}
-
 \end{document}
