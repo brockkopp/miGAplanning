@@ -12,18 +12,10 @@ obsSize = [10 20];
 
 armBase = [ 100 100];
 armLen = [50 50];
-armAng = [10 30;
-          80 80];
+armAng = [10 30];
 
-armPos = updateArmPos(armBase, armLen, armAng(1,:));
-
-% originsX = 5 + (xDim-10) .* rand(numObs,1); % 5 cell padding of walls
-% originsY = 5 + (yDim-10) .* rand(numObs,1); % 5 cell padding of walls
-% sizes = ;
-
+armPos = updateArmPos(armBase, armLen, armAng(:));
 obstacles = zeros(numObs,4);
-
-
 
 for i=1:numObs
     rad = round(obsSize(1) + (obsSize(2)-obsSize(1))*rand(1,1));
@@ -47,7 +39,7 @@ end
 
 %% Calcular Configuration Space
 % if(~exist('cSpace','var'))
-    cSpaceLimits = [1 90 1 360];
+    cSpaceLimits = [1 720 1 360];
     [cSpace F] = buildCspace(armBase, armLen, world, cSpaceLimits);
 % end
 
