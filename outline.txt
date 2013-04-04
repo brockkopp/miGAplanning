@@ -54,3 +54,4 @@ Abstract
 		- Find a gold standard
 	- 100% success of finding a path w/o collisions
 	- Slower than wavefron
+	- num generation
