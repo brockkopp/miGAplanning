@@ -1,0 +1,56 @@
+Abstract
+
+** Intro **
+- Contributions
+	- Validated the use of GA's for path planning
+	- 
+
+** Background **
+
+** Method **
+- Setup
+	- Criteria (Fitness)
+		- Distance (low weight since it doesn't really matter)
+		- Obstacle avoidance (Hight weight, mission critical)
+		- Minimize jerk (Mid weight)
+	
+	- Touch breifly on encoding
+		- High order polynomial
+		- Chromozome - integer encoding
+	- Reporduction
+		- Random crossovers
+	- Mutation
+		- Defaults or Gusen's?
+		- Which worked out, why didn't the other?
+	- Initialization
+		- Random, pop size
+	- Termination
+		- Diversity convergence
+		- Or top half not coliding.
+		- Which worked out, why didn't the other?
+		
+	
+- run with randomly generated environments (or at least 
+	- 1-5 objects
+	- placed randomly w/o overlap
+	- varying but constrained size
+	- fized start/end points
+	- Run 1000 times
+	- analyze data
+	- store data (map and the resultant path)
+
+
+** Results **
+- Distance of ours compared to the wavefront
+- Dynamics, how often they are under an acceptable value
+- How many times it finds a sucessful path w/o collisions
+- Calculation time compared to wavefront
+
+** Discussion **
+- Main findings
+	- Worse distance than wavefront
+	- Expect success in reducing jerk
+		- Find a metric
+		- Find a gold standard
+	- 100% success of finding a path w/o collisions
+	- Slower than wavefron

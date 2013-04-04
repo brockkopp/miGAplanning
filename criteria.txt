@@ -1,0 +1,55 @@
+Abstract (4 Senetences)
+?1. State the problem
+?2. Say why it’s an interesting problem
+?3. Say what your solution achieves
+?4. Say what follows from your solution
+
+Introduction (1 Page)
+1.Describe the problem
+ - Use Examples
+ - Present the general case
+2.State your contributions
+	-Present a list of contributions
+	
+Background (1 page)
+?Materials & Method
+?Datasets
+?Materials (sources)
+?Methods (reference and brief description)
+?Proposed approach: algorithm
+?Equations and formulas
+
+Method (2-3 pages)
+
+-Check that each claim in the intro is addressed
+-Forward reference evidence from a claim
+-Present the experiments
+-Analyze raw data
+
+Experiments -> focus on some of these concepts
+1.Direct Assessment
+?human judging/scoring performance (expert assessment)
+?Many acceptable solutions and result not generate same solution
+?Ex. Generating non-identical portfolio for investors
+2.Ablation (Removal) and Substitution Studies
+?Remove or replace components
+?Ex. caching
+3.Tuning studies
+?Tuning to performance on a test data
+?Warning: research deems as wasteful and misleading
+4.Limitation studies
+?Imperfect data (rearrangement, noisy, incomplete, incorrect)
+?Restricted resource (computational time, available test data)
+?Boundary test cases
+5.Inductive studies
+?Solve new and different problems
+
+Results (2-3 Pages)
+-Stats & Distributions
+
+Discussion & Conclusion (Half a page)
+- Main findigs
+- What results mean
+- Limitations of our method
+- Comparison of our results (Campare to probabilistic path planning)
+- Need for further studies
