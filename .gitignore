@@ -1,3 +1,12 @@
 # MATLAB BUILD FILES #
 ######################
 *.asv
+
+# LAXTEX BUILD FILES #
+######################
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.synctex.gz
