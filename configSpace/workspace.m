@@ -7,17 +7,36 @@ xDim = 2/inc; 	%2m
 yDim = 2/inc;   %2m
 world = zeros(xDim,yDim);
 
-armLen = [ 100 50 ];
+numObs = 3;
+obsSize = [10 20]
+
+armPos = [ 100 75 ];
 armAng = [10 30;
           80 80];
 
 armPos = updateArmPos(armLen, armAng(1,:));
 
-obstacles = [ 50  80 100 120;
-             120 150  30  50;
-             140 160 140 180];
+% originsX = 5 + (xDim-10) .* rand(numObs,1); % 5 cell padding of walls
+% originsY = 5 + (yDim-10) .* rand(numObs,1); % 5 cell padding of walls
+% sizes = ;
 
-numObs = length(obstacles(:,1));
+obstacles = zeros(numObs,4);
+
+for i=1:numObs
+    rad = round(obsSize(1) + (obsSize(2)-obsSize(1))*rand(1,1));
+    origX = round(10 + (xDim-20)*rand(1,1));
+    origY = round(10 + (yDim-20)*rand(1,1));
+    
+    obstacles(i,:) = [ origX-rad origX+rad origY-rad origY+rad ];
+end
+
+% obstacles = [ 50  80 100 120;
+%              120 150  30  50;
+%              140 160 140 180];
+
+% numObs = length(obstacles(:,1));
+
+
     
 for obs=1:numObs
     for i=1:xDim
@@ -29,17 +48,15 @@ for obs=1:numObs
     end
 end
 
-
-
 %% Calcular Configuration Space
-% cSpaceLimits = [1 90 1 360];
-% [cSpace F] = buildCspace(armLen, world, cSpaceLimits);
-
+% if(~exist('cSpace','var'))
+    cSpaceLimits = [1 90 1 360];
+    [cSpace F] = buildCspace(armLen, world, cSpaceLimits);
+% end
 
 %% Plots
 % plotWorld(world, armPos);
 % plotCspace( cSpace );
-
 plotAll( world, armPos, cSpace );
 
 %% GA
