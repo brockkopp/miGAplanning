@@ -1,3 +1,5 @@
+% reference http://www.mathworks.com/help/gads/genetic-algorithm-options.html
+
 close all
 %% Simulation Params
 numSimulations = 5;
@@ -6,14 +8,19 @@ numSimulations = 5;
 PopulationSize = 100;
 
 Generations = 100;
-obstacleWeight = 5;
+obstacleWeight = 25;
 lengthWeightFactor = 0.2; 
 lineResolution = 1; % The line is checked this often for collisions against the configurations space map
 
 crossoverFraction = 0.5; % fraction of population that will reproduce
-eliteCount = 1;
+eliteCount = PopulationSize * 0.05;
+crossoverFunction = @crossovertwopoint;
 
-tournamentSize = PopulationSize / 2;
+mutationFunction = @mutationgaussianadaptfeasible;
+
+fitnessScalingFunction = @fitscalingprop;
+
+tournamentSize = 2;
 selectionFunction = {@selectionTournament, tournamentSize};
 
 %mutationRate = 0.01; % Chance of a mutation for a particular vector entry of chosen individual to mutate
@@ -22,7 +29,7 @@ NumGensAvg = 5; %Termination tolerance is averaged over this many generations
 
 %% Robot Start&End Point
 startPt = [10; 100];
-endPt = [80; 300];
+endPt = [85; 50];
 
 %% Setup Plot
 
@@ -80,9 +87,11 @@ options = gaoptimset(options,'PlotFcns',{@gaplotbestf, @gaplotstopping});
 %options = gaoptimset(options,'TolFun',TerminationConvergenceTolerance);
 %options = gaoptimset(options,'StallGenLimit',NumGensAvg);
 options = gaoptimset(options,'SelectionFcn',selectionFunction);
-options = gaoptimset('MutationFcn', @mutationadaptfeasible);
+options = gaoptimset('MutationFcn', mutationFunction);
 options = gaoptimset('CrossoverFraction', crossoverFraction);
+options = gaoptimset('CrossoverFcn', crossoverFunction);
 options = gaoptimset('EliteCount', eliteCount);
+options = gaoptimset('FitnessScalingFcn', fitnessScalingFunction);
 
 [x, Fval, exitFlag, Output] = ga(@(x) AKfitness(x,startPt, endPt, obstacleWeight, lengthWeightFactor, lineResolution),nvars,[],[],A_linEq,b_linEq,low,upp,[],[],options);
 

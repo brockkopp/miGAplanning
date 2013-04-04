@@ -36,8 +36,8 @@ obstaclePunishment = 0;
 for i=startPt(1):lineResolution:endPt(1)
     y = A + B*i + C*i^2 + D*i^3 + E*i^4;
     if (y > MAX_Y || y < MIN_Y)
-        %obstaclePunishment = HIGH_PUNISHMENT;
-    obstaclePunishment = obstaclePunishment + obsWeight;
+        obstaclePunishment = HIGH_PUNISHMENT;
+    %obstaclePunishment = obstaclePunishment + obsWeight;
     elseif (obstacleGrid(i,ceil(y)) == 1) %if within obstacle
         obstaclePunishment = obstaclePunishment + obsWeight;
     end
