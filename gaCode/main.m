@@ -5,7 +5,7 @@ close all
 numSimulations = 3;
 
 %% GA Configuration Params
-PopulationSize = 100;
+PopulationSize = 125;
 Generations = 25;
 
 coefRangeMin = -100;
@@ -24,8 +24,7 @@ eliteCount = 1; %floor(PopulationSize * 0.01);
 % crossoverFunction = {@crossoverintermediate, ratio};
 crossoverFunction = @crossoverheuristic;
 
-% mutationFunction = @mutationadaptfeasible;
-mutationFunction = @mutationGaussian;
+mutationFunction = @mutationadaptfeasible;
 
 fitnessScalingFunction = @fitscalingprop;
 
@@ -36,7 +35,7 @@ selectionFunction = {@selectiontournament, tournamentSize};
 
 %% Robot Start&End Point
 startPt = [10; 100];
-endPt = [85; 50];
+endPt = [85; 325];
 
 %% Setup Plot
 
