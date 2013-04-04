@@ -1,4 +1,4 @@
-function [ cSpace, F ] = buildCspace( armLen, world, limits, F )
+function [ cSpace, F ] = buildCspace( armBase, armLen, world, limits, F )
 
     h = waitbar(0,'Initializing');
 
@@ -15,7 +15,7 @@ function [ cSpace, F ] = buildCspace( armLen, world, limits, F )
         
         for beta = limits(3):limits(4)
             
-            armPos = updateArmPos(armLen,[alpha beta]);
+            armPos = updateArmPos(armBase, armLen,[alpha beta]);
 
 %             if(mod(beta,45) == 0)
 %                 plotAll( world, armPos, cSpace )
@@ -25,24 +25,24 @@ function [ cSpace, F ] = buildCspace( armLen, world, limits, F )
             
             cSpace(alpha,beta) = 0;
             
-            if(armPos(1,1) <= 0 || armPos(1,1) >= xDim || ...
-               armPos(1,2) <= 0 || armPos(1,2) >= yDim || ...
-               armPos(2,1) <= 0 || armPos(2,1) >= xDim || ...
-               armPos(2,2) <= 0 || armPos(2,2) >= yDim)
+            if(armPos(2,1) <= 1 || armPos(2,1) >= xDim-1 || ...
+               armPos(2,2) <= 1 || armPos(2,2) >= yDim-1 || ...
+               armPos(3,1) <= 1 || armPos(3,1) >= xDim-1 || ...
+               armPos(3,2) <= 1 || armPos(3,2) >= yDim-1)
                 cSpace(alpha,beta) = 1;
             else
-                for i=0:armLen(1)
-                    x1 = round(i*cos(degtorad(alpha))+1);
-                    y1 = round(i*sin(degtorad(alpha))+1);
+                for i=1:armLen(1)
+                    x1 = round(armPos(1,1)+i*cos(degtorad(alpha))+1);
+                    y1 = round(armPos(1,2)+i*sin(degtorad(alpha))+1);
                     if(world(x1,y1) == 1)
                         cSpace(alpha,beta) = 1;
                         break;
                     end
                 end
                 if(cSpace(alpha,beta) == 0)
-                    for i=0:armLen(2)
-                        x2 = round(armPos(1,1)+i*cos(degtorad(beta))+1);
-                        y2 = round(armPos(1,2)+i*sin(degtorad(beta))+1);
+                    for i=1:armLen(2)
+                        x2 = round(armPos(2,1)+i*cos(degtorad(beta))+1);
+                        y2 = round(armPos(2,2)+i*sin(degtorad(beta))+1);
                         if(world(x2,y2) == 1)
                             cSpace(alpha,beta) = 1;
                             break;

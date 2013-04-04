@@ -12,8 +12,8 @@ function [fig] = plotAll( world, armPos, cSpace )
             hold on;
             image(100*(1-world)');
             colormap(gray);
-            plot([0 armPos(1,1)],[0 armPos(1,2)],'-b','LineWidth',5);
-            plot([armPos(1,1) armPos(2,1)],[armPos(1,2) armPos(2,2)],'-r','LineWidth',5);
+            plot([armPos(1,1) armPos(2,1)],[armPos(1,1) armPos(2,2)],'-b','LineWidth',5);
+            plot([armPos(2,1) armPos(3,1)],[armPos(2,2) armPos(3,2)],'-r','LineWidth',5);
             axis (worldAxes); 
             title('Workspace','FontSize',14);
             xlabel('X-Position (cm)','FontSize',12)
