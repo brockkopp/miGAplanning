@@ -12,7 +12,7 @@ coefRangeMin = -100;
 coefRangeMax = 100;
 
 obstacleWeight = 1;
-lengthWeightFactor = 0; 
+lengthWeightFactor = 0.01; 
 lineResolution = 1; % The line is checked this often for collisions against the configurations space map
 
 TerminationConvergenceTolerance = 0.1;
@@ -34,13 +34,14 @@ selectionFunction = {@selectiontournament, tournamentSize};
 %selectionFunction = @selectionstochunif;
 
 %% Robot Start&End Point
-startPt = [10; 100];
-endPt = [85; 325];
+startPt = [20; 50];
+endPt = [80; 300];
 
 %% Setup Plot
 
 % Load obstacle Grid
-obsGrid = importdata('obsGrid.mat');
+% obsGrid = importdata('obsGrid.mat');
+obsGrid = obsGrid; 
 
 mapPlot = figure; 
 hold on;
@@ -117,6 +118,28 @@ fprintf('Fitness Value = %g\n', Fval);
 fprintf('Generations   = %g\n', Output.generations);
 format short;
 fprintf('y = %.3g + (%.3g)x + (%.3g)x^2 + (%.3g)x^3 + (%.3g)x^4 \n', x(1), x(2), x(3), x(4), x(5));
+
+A = x(1);
+B = x(2);
+C = x(3);
+D = x(4);
+E = x(5);
+
+collision = 1;
+offScreen = 0;
+numCollisions = 0;
+for i=startPt(1):lineResolution:endPt(1)
+    y = A + B*i + C*i^2 + D*i^3 + E*i^4;
+    if (y > yDim || y < 0)
+%         offScreen = 1;
+        numCollisions = 10000;
+        break;
+    elseif (obsGrid(i,ceil(y)) == 1) %if within obstacle
+        numCollisions = numCollisions + collision;
+    end
+end
+
+fprintf('Number of Collisions: %g\n', numCollisions);
 
 figure(mapPlot);
 plot(t,x(1)+x(2)*t + x(3)*t.^2 + x(4)*t.^3 + x(5)*t.^4, 'r');

@@ -34,12 +34,15 @@ dist = integral(y2, startPt(1), endPt(1));
 % Punish for Obstacle
 obstaclePunishment = 0;
 for i=startPt(1):lineResolution:endPt(1)
-    y = A + B*i + C*i^2 + D*i^3 + E*i^4;
+    y = A + B*i + C*i^2 + D*i^3   + E*i^4;
+    y_v =   B   + 2*C*i + 3*D*i^2 + 4*E*i^3;
+%     y_a =         2*C   + 6*D*i   + 12*E*i^2;
+    y_j =                 6*D     + 24*E*i;
     if (y > MAX_Y || y < MIN_Y)
         obstaclePunishment = obstaclePunishment + HIGH_PUNISHMENT;
     %obstaclePunishment = obstaclePunishment + obsWeight;
     elseif (obstacleGrid(i,ceil(y)) == 1) %if within obstacle
-        obstaclePunishment = obstaclePunishment + obsWeight;
+        obstaclePunishment = obstaclePunishment + obsWeight * ceil(abs(y_v));
     end
 end
 
