@@ -11,19 +11,20 @@ Generations = 25;
 coefRangeMin = -100;
 coefRangeMax = 100;
 
-obstacleWeight = 1;
+obstacleWeight = 2;
 lengthWeightFactor = 0.01; 
 lineResolution = 1; % The line is checked this often for collisions against the configurations space map
+jerkWeight = 0*0.0001;
 
 TerminationConvergenceTolerance = 0.1;
 NumGensAvg = 10;
 
 crossoverFraction = 0.80; % fraction of population that will reproduce
 eliteCount = 1; %floor(PopulationSize * 0.01);
-% ratio = 0.5;
+%  ratio = 0.5;
 % crossoverFunction = {@crossoverintermediate, ratio};
 crossoverFunction = @crossoverheuristic;
-
+% crossoverFunction = @crossovertwopoint;
 mutationFunction = @mutationadaptfeasible;
 
 fitnessScalingFunction = @fitscalingprop;
@@ -112,7 +113,7 @@ options = gaoptimset(options,'CrossoverFcn', crossoverFunction);
 options = gaoptimset(options,'EliteCount', eliteCount);
 options = gaoptimset(options,'FitnessScalingFcn', fitnessScalingFunction);
 
-[x, Fval, exitFlag, Output] = ga(@(x) AKfitness(x,startPt, endPt, obstacleWeight, lengthWeightFactor, lineResolution),nvars,[],[],A_linEq,b_linEq,low,upp,[],[],options);
+[x, Fval, exitFlag, Output] = ga(@(x) AKfitness(x,startPt, endPt, obstacleWeight, lengthWeightFactor, jerkWeight, lineResolution, j),nvars,[],[],A_linEq,b_linEq,low,upp,[],[],options);
 
 fprintf('Fitness Value = %g\n', Fval);
 fprintf('Generations   = %g\n', Output.generations);
@@ -128,6 +129,12 @@ E = x(5);
 collision = 1;
 offScreen = 0;
 numCollisions = 0;
+djerk = 0;
+ddist = 0;
+dcoll = 0;
+
+y2 = @(t) sqrt(1 + (B + 2*C*t + 3*D*t.^2 + 4*E*t.^3).^2); % (B^2 + 1) + (4*B*C)*t + (4*C^2)*t.^2);
+ddist = integral(y2, startPt(1), endPt(1)) * lengthWeightFactor;
 for i=startPt(1):lineResolution:endPt(1)
     y = A + B*i + C*i^2 + D*i^3 + E*i^4;
     if (y > yDim || y < 0)
@@ -136,8 +143,22 @@ for i=startPt(1):lineResolution:endPt(1)
         break;
     elseif (obsGrid(i,ceil(y)) == 1) %if within obstacle
         numCollisions = numCollisions + collision;
+        dcoll = dcoll + obstacleWeight * ceil(abs(y_v));
     end
+    y_v =   B   + 2*C*i + 3*D*i^2 + 4*E*i^3;
+%     y_a =         2*C   + 6*D*i   + 12*E*i^2;
+    y_jerk =                 6*D     + 24*E*i;
+    djerk = djerk + y_jerk*jerkWeight;
+    
 end
+disp 'jerk'
+djerk
+
+disp 'Obstacle'
+dcoll
+
+disp 'length'
+ddist
 
 fprintf('Number of Collisions: %g\n', numCollisions);
 
