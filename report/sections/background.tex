@@ -18,8 +18,14 @@ To define the fitted curve, research has been done using Bézier curves \cite{cho
 
 The father of genetic algorithms, John Holland, modeled this machine intelligence technique after the evolution research by Darwin and the genetic ``survival of the fittest'' discovered in the natural, biological sphere. There are two natural learning epitomes available: the brain and evolution. Holland was inspired by the fact that the processes of natural evolution and natural genetics have become elucidated over decades of study in biology and molecular biology \cite{goldberg88}. The subtleties of the fundamental mechanisms of the brain, in contrast, are still shrouded in mystery. As such it seems clear to use the better understood model of genetic evolution as a platform for an optimization technique.
 
-Research has already been done regarding the application of the parallel heuristic search method of genetic algorithms to curve fitting \cite{gulsen95,karr91,ismail08}. The goal is to find the coefficients that will define a path that with optimized path criteria. Thus each chromosome will contain a bitwise representation of each of the coefficient parameters.
+Research has already been done regarding the application of the parallel heuristic search method of genetic algorithms to curve fitting \cite{gulsen95,karr91,ismail08}. The goal is to find the coefficients of a polynomial function that will define a path that with optimized path criteria. Thus each chromosome will contain a set of function parameters, labelled $\{P_4, \ldots, P_0\}$ in Equation \ref{eq:polyTraj}.
 
-Fitness will be determined based on distance as well as proximity to an obstacle. For safety, the robot should not approach too closely to an obstacle, thus the path must be planned to incorporate the robot dynamics such that obstacle avoidance will leave a sufficient safety margin. As such, smoothness is an implicit criterion.
+\begin{align} \label{eq:polyTraj}
+	\phi = P_4*\theta^4 + P_3*\theta^3 + P_2*\theta^2 + P_1*\theta + P_0
+\end{align}
+
+Testing will be performed by creating random environments containing arbitrarily place objects. The algorithm will then plot a trajectory between a randomly defined start and end point. Many iterations of these tests will be performed in a variety of environments in order to accurately determine the effectiveness of this algorithm. The average path distance for each environment will be compared to the minimum distance as calculated by a Wavefront algorithm (CITE).
+
+The wavefront algorithm is a deterministic algorithm which is capable of determining the shortest path between two points through a descritized environment. This will provide a ``gold standard'' which can be used to evaluate the performance of the genetical algorithm. Since the genetic algorithm is a stochastic search, it will never result in an identical path twice. As such all results will be presented as averages and their associated distributions.
 
 The result will be a global path planning algorithm functional in a static environment. Dynamic environments are possible with the proposed algorithm, however computational efficiency must be optimized in order to minimize the time required to find the solution. This new applications offers a simple way to determine a path while taking into consideration all the path criteria.

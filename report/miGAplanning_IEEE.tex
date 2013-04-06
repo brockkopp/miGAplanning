@@ -25,8 +25,9 @@
 %\setlength{\textheight}{235.2mm}
 %\setlength{\footskip}{12.4mm}
 
-\setlength{\parindent}{1pc}
+%\setlength{\parindent}{1pc}
 
+\usepackage{lipsum}
 
 \usepackage{fancyhdr}
 
@@ -36,9 +37,11 @@
 \usepackage{url}
 \usepackage{amsmath}
 \usepackage{stfloats}
+\usepackage{placeins}
 
 \usepackage{graphicx}
 \usepackage{epstopdf}
+
 
 %\usepackage{subfigure} % Written by Steven Douglas Cochran
                         % This package makes it easy to put subfigures
@@ -121,7 +124,7 @@
 
 \begin{document}
 % paper title
-\title{A Motion Planning Method Based on Genertic Algorithms and Curve Fitting Techniques}
+\title{A Motion Planning Method Based on Genetic Algorithms and Curve Fitting Techniques}
 \newcommand{\Keywords}{Genertic Algorithms, Curve Fitting, Path Planning, Grid Method, Robotics}
 
 % author names and affiliations
@@ -179,19 +182,26 @@
 
 \section{Introduction}
 \input{./sections/introduction.tex}
+\FloatBarrier
 
 \section{Background Review}
 \input{./sections/background.tex}
+\FloatBarrier
 
 \section{Method}
 \input{./sections/method.tex}
+\FloatBarrier
 
 \section{Results}
 \input{./sections/results.tex}
+\FloatBarrier
 
 \section{Discussion}
 \input{./sections/discussion.tex}
+\FloatBarrier
 
+%	Figure Example
+%--------------------------------------------------------------------------------%
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
 % For figures, \caption should occur after the \includegraphics.
@@ -205,7 +215,8 @@
 % \label{fig_sim}
 % \end{figure}
 
-
+%	Double Figure Example
+%--------------------------------------------------------------------------------%
 % An example of a double column floating figure using two subfigures.
 % (The subfigure.sty package must be loaded for this to work.)
 % The subfigure \label commands are set within each subfigure command, the
@@ -226,7 +237,8 @@
 % \label{fig_sim}
 % \end{figure*}
 
-
+%	Table Example
+%--------------------------------------------------------------------------------%
 % An example of a floating table. Note that, for IEEE style tables, the
 % \caption command should come BEFORE the table. Table text will default to
 % \footnotesize as IEEE normally uses this smaller font for tables.
@@ -249,6 +261,7 @@
 % \end{tabular}
 % \end{center}
 % \end{table}
+
 
 % trigger a \newpage just before the given reference
 % number - used to balance the columns on the last page

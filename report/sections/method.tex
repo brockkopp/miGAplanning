@@ -38,8 +38,10 @@
 
 The Genetic Algorithm (GA) formed the basis for the experiemnts. Significant effort was expended setting up the GA in advance of testing, since without a well structured algorithm, the testing was sure to show poor results. The GA was implemented on Matlab, using the built-in GA libraries in order to avoid unnecessary development. While the base functionality was used, there remained many design considerations.
 
+\subsection{Criteria}
+
 \subsection{Configuration Space}
-Commanding a robotic manipulator's position is complicated by the fact that it cannot be specified is X-Y-Z coordinates, but rather must be commanded using joint angles. Not only is this not intuitive for a human, but existing planning techniques function using more standard X-Y or X-Y-Z coordinate systems. As such, the robot's workspace was converted into a Configuration Space. Figure \ref{fig:ws2cs} shows both the configuration space for an arbitrary workspace. In this workspace, the 2-DOF robotic manipulator is denoted by the blue and red lines (each DOF respectively) and the allowable configurations are denoted on the right by whitespace.
+Commanding a robotic manipulator's position is complicated by the fact that it cannot be specified is X-Y-Z coordinates, but rather must be commanded using joint angles. Not only is this not intuitive for a human, but existing planning techniques function using more standard X-Y or X-Y-Z coordinate systems. As such, the robot's workspace was converted into a Configuration Space. Figure \ref{fig:ws2cs} shows both the workspace and the configuration space for a 2-DOF robot in an arbitrary workspace. The robotic manipulator's two degrees of freedom are denoted by the blue and red lines (each DOF respectively). The alloable robot configurations denoted in the Configuration Space by whitespace, while collisions are denoted by black.
 
 \begin{figure}[h]
 	\centering
@@ -48,15 +50,31 @@ Commanding a robotic manipulator's position is complicated by the fact that it c
 	\label{fig:ws2cs}
 \end{figure}
 
-In the configuration space, the robot 
+In the configuration space, robot tracjectories can be easily identified by either a human or a motion planning algorithm. This angle-angle plot can then be used to implement a polynomial trajectory, of which optimal coefficients can easily be solved using a Genetic Algorithm. The parameterized trajectory is denoted in Equation \ref{eq:polyTraj}.
+
+\subsection{Population Initiatlization}
+The population was randomly initialized with coefficient values in the range of \-100 to 100. This range was imposed on the coefficients as it was found to provide a good compromise between promoting function manipulation while at the same time keeping it under control so that changes to coefficients did not make too drastic a change to the shape of the path.
+
+The population size was chosen to be 125. This population number was found to provide the necissary diversity in the population.
 
 \subsection{Encoding}
-The GA was developed using a linear encoding scheme, where a chromosome was defined to be an array of coefficients for a polynomial function. Therefore, the GA would ultimately return the ideal set of coefficients for a function which would describe the optimal path for the robotic manipulator. These coefficients were limited to a range of [-50,50], since larger coefficients guarantee an invalid path since it would be too large and leave the workspace. While larger coefficients do not adversely affect the result of the algorithm, the increased diversity requires significantly larger computational resources which were not avaliable.
+The GA was developed using a linear encoding scheme, where a chromosome was defined to be an array of the polynomial function's coefficients (denoted as $\{P_0, \ldots, P_4\}$ in Equation \ref{eq:polyTraj}). Therefore, the GA would ultimately return the ideal set of coefficients for a function which would describe the optimal path for the robotic manipulator. These coefficients were limited to a range of [-50,50], since larger coefficients guarantee an invalid path since it would be too large and leave the workspace. While larger coefficients do not adversely affect the result of the algorithm, the increased diversity requires significantly larger computational resources which were not avaliable.
 
-\textbf{SECTION REQUIREMENTS}
-\begin{itemize}
-\item Check that each claim in the intro is addressed
-\item Forward reference evidence from a claim
-\item Present the experiments
-\item Analyze raw data
-\end{itemize}
+\subsection{Selection}
+A tournament selection method was used in this implementation. 2 individuals were chosen for each tournament. This allowed for an acceptable tradeoff between choosing a fit parent while promoting diversity in the offspring. This was one approach used to increase the diversity of the population when it was observed that the algorithm was getting stuck in local minima.
+
+\subsection{Reproduction and Mutation}
+A heuristic reproduction method was used wherein the child is generated by taking the mean of the coefficients of the two parents, and then biased to resemble the parent. In our implementation, the child was biased 20\% towards the most fit parent using formula \ref{crossoverEq}.
+
+\begin{equation} \label{crossoverEq}
+child_i = parent_{i2} + 1.2 * (parent_{i1} + parent_{i2})
+\end{equation}
+
+As is common in non-binary encoded GA problems, this crossover method is based on a mean of the parents' genes. This is a key distinction from a traditional point crossover method, as it allows the genes to evolve from values that were not present in the initial population. If point crossover methods had been used, the best case scenario would involve the optimal configuration of coefficients from the initial, random population.
+
+Mutation was achieved using a completely random mutation to a coefficient within the inidvidual to be mutated. In order to satisfy the linear constraints of the start and end points, the function was rendered invalid by the mutation, a new random coefficient was chosen instead.
+
+\subsection{Termination}
+\textbf{KARL}
+
+\lipsum[1]
