@@ -7,7 +7,7 @@ startPos = startPt;
 endPos = endPt;
 
 %% Set up environment
-map = obsGrid;
+map = obsGrid(50:80, 50:90);
 
 % Region Bounds
 posMinBound = [0 0];
@@ -65,19 +65,47 @@ for i=1:N
                     e(cur, cur-1) = 1;
                     e(cur-1,cur) = 1;
                 end
-            end
+            end    
             % Link down
             if (i<N)
                 if (map(i+1,j) == 0)
                     e(cur, cur+M) = 1;
                     e(cur+M,cur) = 1;
                 end
-            end
+            end      
             % Link right
             if (j<M)
                 if (map(i,j+1) == 0)
                     e(cur, cur+1) = 1;
                     e(cur+1,cur) = 1;
+                end
+            end   
+            % Link up-left if empty
+            if (i>1 && j>1)
+                if (map(i-1,j-1) == 0)
+                    e(cur, cur-M-1) = 1;
+                    e(cur-M-1,cur) = 1;
+                end
+            end      
+            % Link down-left if empty
+            if (i<N && j>1)
+                if (map(i+1,j-1) == 0)
+                    e(cur, cur+M-1) = 1;
+                    e(cur+M-1,cur) = 1;
+                end
+            end
+            % Link down-right if empty
+            if (i<N && j<M)
+                if (map(i+1,j+1) == 0)
+                    e(cur, cur+M+1) = 1;
+                    e(cur+M+1,cur) = 1;
+                end
+            end
+            % Link up-right if empty
+            if (i>1 && j<M)
+                if (map(i-1,j+1) == 0)
+                    e(cur, cur-M+1) = 1;
+                    e(cur-M+1,cur) = 1;
                 end
             end
         end % if empty
@@ -132,17 +160,17 @@ while (~done)
             O = [O; neigh(i) curnode(2)+1]; 
         end
     end
-%     if (curnode(2) > dist)
-%         figure(4); clf; hold on;
-%         axis([0 N 0 M]);
-%         colormap('default')
-%         imagesc(wave', [0 1.5*(M+N)])
-%         plot(finishi,finishj,'r*');
-%         plot(starti,startj,'b*');
-%         dist = curnode(2);
-% %         F(t) = getframe(gcf);
-% %         t = t+1;
-%     end
+    if (curnode(2) > dist)
+        figure(4); clf; hold on;
+        axis([0 N 0 M]);
+        colormap('default')
+        imagesc(wave', [0 1.5*(M+N)])
+        plot(finishi,finishj,'r*');
+        plot(starti,startj,'b*');
+        dist = curnode(2);
+%         F(t) = getframe(gcf);
+%         t = t+1;
+    end
 end
 
 %% Shortest path
@@ -152,17 +180,29 @@ path = zeros(len,2);
 path(1,:) = [starti startj];
 for i=1:len
     options = [];
-    if (path(i,1)>1)
+    if (path(i,1)>1) %left
         options = [options; [path(i,1)-1 path(i,2)]];
     end
-    if (path(i,1)<N)
+    if (path(i,1)<N) %right
         options = [options; [path(i,1)+1 path(i,2)]];
     end
-    if (path(i,2)>1)
+    if (path(i,2)>1) %down
         options = [options; [path(i,1) path(i,2)-1]];
     end
-    if (path(i,2)<M)
+    if (path(i,2)<M) %up
         options = [options; [path(i,1) path(i,2)+1]];
+    end
+    if (path(i,1)>1 && path(i,2)>1) %%left-down
+        options = [options; [path(i,1)-1 path(i,2)-1]];
+    end
+    if (path(i,1)>1 && path(i,2)<M) %%left-up
+        options = [options; [path(i,1)-1 path(i,2)+1]];
+    end
+    if (path(i,1)<N && path(i,2)>1)  %%right-down
+        options = [options; [path(i,1)+1 path(i,2)-1]];
+    end
+    if (path(i,1)<N && path(i,2)<M)  %%right-up
+        options = [options; [path(i,1)+1 path(i,2)+1]];
     end
     oplen = length(options(:,1));
     for j = 1:oplen
