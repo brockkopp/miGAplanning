@@ -53,6 +53,29 @@ cSpaceFilenames = [ 'cSpace2',
                     'cSpace4',
                     'obsGrid'];
 
+pointSetVector = [  7, 104; 394, 112;
+                   15, 142; 238, 247;
+                    7, 263; 222, 135;
+                   91, 222; 314,  24;
+                   58, 219; 184, 341;
+                  155, 318; 352, 146;
+                  116, 194; 206, 131;
+                  156, 259; 286,  83;
+                   48, 257; 208, 112;
+                  151, 248; 308, 296;
+                  105,  91; 319, 107;
+                  143, 328; 264, 41;
+                  120, 135; 263, 3;
+                  65 , 208; 359, 314;
+                  115, 229; 336, 47;
+                  22 ,  59; 78 , 360;
+                  23 , 316;  88, 23;
+                  23 , 329; 60 , 329;
+                  9  , 90;  59 , 15;
+                  36 , 268; 48 , 13;]
+                  
+                  
+
 for cSpaceIteration = 1:numCspaces
     
     cSpaceID = cSpaceIteration;
@@ -71,8 +94,11 @@ for cSpaceIteration = 1:numCspaces
     pointSetID = pointsIteration;
     %% Robot Start&End Point
     cSpace = obsGrid;
-    [startPt endPt] = generatePoints(cSpace);
-
+%     [startPt endPt] = generatePoints(cSpace);
+    startPt = [pointSetVector(pointsIteration, 1), pointSetVector(pointsIteration, 2)];
+    endPt =   [pointSetVector(pointsIteration + 1, 1), pointSetVector(pointsIteration + 1, 2)];
+    
+    
     figure(mapPlot);
     plot(startPt(1), startPt(2), 'g*', 'MarkerSize',6);
     plot(endPt(1), endPt(2), 'g*', 'MarkerSize',6);
