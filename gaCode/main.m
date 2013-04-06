@@ -1,7 +1,7 @@
 % reference http://www.mathworks.com/help/gads/genetic-algorithm-options.html
 close all
 
-simName = 'Baseline';
+simName = 'test';
 simdir = strcat('sim_', simName);
 mkdir(simdir);
 
@@ -90,14 +90,13 @@ for cSpaceIteration = 1:numCspaces
     image(100*(1-obsGrid)');
     colormap(gray);
     
-    for pointsIteration = 1:numPointSets
+    for pointsIteration = 1:2:numPointSets
     pointSetID = pointsIteration;
     %% Robot Start&End Point
     cSpace = obsGrid;
 %     [startPt endPt] = generatePoints(cSpace);
     startPt = [pointSetVector(pointsIteration, 1), pointSetVector(pointsIteration, 2)];
     endPt =   [pointSetVector(pointsIteration + 1, 1), pointSetVector(pointsIteration + 1, 2)];
-    
     
     figure(mapPlot);
     plot(startPt(1), startPt(2), 'g*', 'MarkerSize',6);
