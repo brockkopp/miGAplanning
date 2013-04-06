@@ -1,13 +1,19 @@
 % reference http://www.mathworks.com/help/gads/genetic-algorithm-options.html
-
 close all
+
+simName = 'Baseline';
+simdir = strcat('sim_', simName);
+mkdir(simdir);
+
+f = fopen(strcat(simdir,'/gaData.mat'), 'w');
+fclose(f);
 
 %% Simulation Params
 numCspaces = 4;
 numPointSets = 5;
 colors = ['b' 'r' 'g' 'k' 'c'];
 numSimulations = 5; %per points per cSpace
-outputData = zeros(numSimulations, 17);
+outputData = zeros(numSimulations, 18);
 
 %% GA Configuration Params
 PopulationSize = 75;
@@ -19,7 +25,7 @@ coefRangeMax = 100;
 obstacleWeight = 2;
 lengthWeightFactor = 0.01; 
 lineResolution = 1; % The line is checked this often for collisions against the configurations space map
-jerkWeight = 0;
+jerkWeight = 1;
 
 TerminationConvergenceTolerance = 0.01;
 NumGensAvg = 10;
@@ -42,14 +48,16 @@ selectionFunction = {@selectiontournament, tournamentSize};
 
 
 %% Setup Plot
-cSpaceFilenames = [ 'cSpace2.mat',
-                    'cSpace3.mat',
-                    'cSpace4.mat',
-                    'obsGrid.mat'];
+cSpaceFilenames = [ 'cSpace2',
+                    'cSpace3',
+                    'cSpace4',
+                    'obsGrid'];
 
 for cSpaceIteration = 1:numCspaces
+    
+    cSpaceID = cSpaceIteration;
     % Load obstacle Grid
-    fpath = strcat('../configSpace/',  cSpaceFilenames(cSpaceIteration,:))
+    fpath = strcat('../configSpace/',  cSpaceFilenames(cSpaceIteration,:), '.mat')
     obsGrid = importdata(fpath);
 
     mapPlot = figure; 
@@ -60,6 +68,7 @@ for cSpaceIteration = 1:numCspaces
     colormap(gray);
     
     for pointsIteration = 1:numPointSets
+    pointSetID = pointsIteration;
     %% Robot Start&End Point
     cSpace = obsGrid;
     [startPt endPt] = generatePoints(cSpace);
@@ -75,7 +84,7 @@ for cSpaceIteration = 1:numCspaces
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         for j=1:numSimulations
 
-        cSpaceID = j
+        
 
         %% Number of variables in chromosome
         nvars = 5;
@@ -196,11 +205,14 @@ for cSpaceIteration = 1:numCspaces
         %fprintf('Length = (%.3g)', minLength(x, startPt, endPt));
         numGenerations = Output.generations;
         fitnessValue = Fval;
-        outputData(j,:) = [cSpaceID x solutionLength numCollisions maxJerk numGenerations fitnessValue gaLengthTime PopulationSize startPt endPt];
+        outputData(j,:) = [cSpaceID pointSetID x solutionLength numCollisions maxJerk numGenerations fitnessValue gaLengthTime PopulationSize startPt endPt];
         end
-    save('gaData.txt', 'outputData', '-ASCII', '-append');
+    save(strcat(simdir,'/gaData.txt'), 'outputData', '-ASCII', '-append');
+
     end
+    figname = strcat(simdir, '/' ,cSpaceFilenames(cSpaceIteration,:), '.fig');
+    saveas(figure(1), figname);
 end
-%outputData(1, :) = ['cSpaceID'  'A' 'B' 'C' 'D 'E'  'solutionLength' 'numCollisions' 'maxJerk' 'numGenerations' 'fitnessValue' 'gaLengthTime' 'populationSize' 'startPtX' 'startPtY' 'endPtX' 'endPtY'];
+%outputData(1, :) = ['cSpaceID' 'pointSetID'  'A' 'B' 'C' 'D 'E'  'solutionLength' 'numCollisions' 'maxJerk' 'numGenerations' 'fitnessValue' 'gaLengthTime' 'populationSize' 'startPtX' 'startPtY' 'endPtX' 'endPtY'];
 
 disp '_Done'
