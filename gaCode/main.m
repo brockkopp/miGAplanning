@@ -1,11 +1,12 @@
 % reference http://www.mathworks.com/help/gads/genetic-algorithm-options.html
 
 close all
+outputData = [];
 %% Simulation Params
-numSimulations = 3;
+numSimulations = 1;
 
 %% GA Configuration Params
-PopulationSize = 125;
+PopulationSize = 200;
 Generations = 50;
 
 coefRangeMin = -100;
@@ -118,7 +119,9 @@ options = gaoptimset(options,'CrossoverFcn', crossoverFunction);
 options = gaoptimset(options,'EliteCount', eliteCount);
 options = gaoptimset(options,'FitnessScalingFcn', fitnessScalingFunction);
 
+tic;
 [x, Fval, exitFlag, Output] = ga(@(x) AKfitness(x,startPt, endPt, obstacleWeight, lengthWeightFactor, jerkWeight, lineResolution, j),nvars,[],[],A_linEq,b_linEq,low,upp,[],[],options);
+gaLengthTime = toc;
 
 fprintf('Fitness Value = %g\n', Fval);
 fprintf('Generations   = %g\n', Output.generations);
@@ -157,6 +160,10 @@ for i=startPt(1):lineResolution:endPt(1)
         djerk = y_jerk;
     end
     
+    
+
+    
+    
 end
 disp 'jerk'
 djerk * jerkWeight
@@ -174,6 +181,9 @@ plot(t,x(1)+x(2)*t + x(3)*t.^2 + x(4)*t.^3 + x(5)*t.^4, 'r');
 
 %fprintf('Length = (%.3g)', minLength(x, startPt, endPt));
 
+outputData(j+1) = [cSpaceID, x, solutionLength, numCollisions, maxJerk, numGenerations, fitnessValue, gaLengthTime, populationSize];
 end
 
+outputData(1) = ['cSpaceID', 'x', 'solutionLength', 'numCollisions', 'maxJerk', 'numGenerations', 'fitnessValue', 'gaLengthTime', 'populationSize'];
+save('gaData.csv', outputData);
 disp '_Done'
