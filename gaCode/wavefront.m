@@ -1,24 +1,24 @@
-% Wavefront example
-close all; clc
+function [pathLength] = wavefront(startPt, endPt, cSpace)
 
-m=1;
+tic
 % Vehicle start and end position
 startPos = startPt;
 endPos = endPt;
 
+
 %% Set up environment
-map = cSpace(50:80, 50:90);
+map = cSpace;
 
 % Region Bounds
 posMinBound = [0 0];
 posMaxBound = size(map);
 
 % Plot environment
-figure(1); clf;
-hold on;
-axis([posMinBound(1) posMaxBound(1) posMinBound(2) posMaxBound(2)]);
-imagesc(1-map');
-colormap('bone')
+% figure(1); clf;
+% hold on;
+% axis([posMinBound(1) posMaxBound(1) posMinBound(2) posMaxBound(2)]);
+% imagesc(1-map');
+% colormap('bone')
 
 %% Graph setup
 N = posMaxBound(1);
@@ -178,7 +178,6 @@ end
 len = wave(starti,startj);
 path = zeros(len,2);
 path(1,:) = [starti startj];
-pathLength = 0;
 for i=1:len
     options = [];
     if (path(i,1)>1) %left
@@ -230,4 +229,6 @@ plot(path(:,1),path(:,2), 'rx-')
 %     F(t) = getframe(gcf);
 %     t=t+1;
 % end
+toc
 
+end
