@@ -33,6 +33,7 @@ dist = integral(y2, startPt(1), endPt(1));
 
 % Punish for Obstacle
 obstaclePunishment = 0;
+maxJerk = 0;
 for i=startPt(1):lineResolution:endPt(1)
     y = A + B*i + C*i^2 + D*i^3   + E*i^4;
     y_v =   B   + 2*C*i + 3*D*i^2 + 4*E*i^3;
@@ -47,10 +48,12 @@ for i=startPt(1):lineResolution:endPt(1)
         obstaclePunishment = obstaclePunishment + obsWeight * ceil(abs(y_v));
     end
     
-    % Penalize
-    obstaclePunishment = obstaclePunishment + y_jerk*jerkWeight;
+    % fins max jerk
+    if (y_jerk > maxJerk)
+        maxJerk = y_jerk;
+    end
 
 end
 
-funval = dist*lengthWeightFactor + obstaclePunishment;
+funval = dist*lengthWeightFactor + obstaclePunishment + maxJerk*jerkWeight;
 end

@@ -6,7 +6,7 @@ numSimulations = 3;
 
 %% GA Configuration Params
 PopulationSize = 125;
-Generations = 25;
+Generations = 50;
 
 coefRangeMin = -100;
 coefRangeMax = 100;
@@ -14,9 +14,9 @@ coefRangeMax = 100;
 obstacleWeight = 2;
 lengthWeightFactor = 0.01; 
 lineResolution = 1; % The line is checked this often for collisions against the configurations space map
-jerkWeight = 0*0.0001;
+jerkWeight = 1;
 
-TerminationConvergenceTolerance = 0.1;
+TerminationConvergenceTolerance = 0.01;
 NumGensAvg = 10;
 
 crossoverFraction = 0.80; % fraction of population that will reproduce
@@ -34,11 +34,12 @@ tournamentSize = 6;
 selectionFunction = {@selectiontournament, tournamentSize};
 %selectionFunction = @selectionstochunif;
 
-%% Robot Start&End Point
-startPt = [20; 50];
-endPt = [80; 300];
+
 
 %% Setup Plot
+%% Robot Start&End Point
+startPt = [12; 51];
+endPt = [300; 290];
 
 % Load obstacle Grid
 % obsGrid = importdata('obsGrid.mat');
@@ -59,6 +60,10 @@ t = startPt(1):0.1:endPt(1);
 % Iterate through all simulations%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 for j=1:numSimulations
+    
+    
+    
+    
 %% Number of variables in chromosome
 nvars = 5;
 
@@ -148,11 +153,13 @@ for i=startPt(1):lineResolution:endPt(1)
     y_v =   B   + 2*C*i + 3*D*i^2 + 4*E*i^3;
 %     y_a =         2*C   + 6*D*i   + 12*E*i^2;
     y_jerk =                 6*D     + 24*E*i;
-    djerk = djerk + y_jerk*jerkWeight;
+    if (y_jerk > djerk)
+        djerk = y_jerk;
+    end
     
 end
 disp 'jerk'
-djerk
+djerk * jerkWeight
 
 disp 'Obstacle'
 dcoll
@@ -160,7 +167,7 @@ dcoll
 disp 'length'
 ddist
 
-fprintf('Number of Collisions: %g\n', numCollisions);
+% fprintf('Number of Collisions: %g\n', numCollisions);
 
 figure(mapPlot);
 plot(t,x(1)+x(2)*t + x(3)*t.^2 + x(4)*t.^3 + x(5)*t.^4, 'r');
