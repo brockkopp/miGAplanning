@@ -4,13 +4,13 @@ close all
 
 %% Simulation Params
 numCspaces = 4;
-numPointSets = 3;
+numPointSets = 5;
 colors = ['b' 'r' 'g' 'k' 'c'];
-numSimulations = 1; %per points per cSpace
-outputData = zeros(numSimulations + 1, 17);
+numSimulations = 5; %per points per cSpace
+outputData = zeros(numSimulations, 17);
 
 %% GA Configuration Params
-PopulationSize = 25;
+PopulationSize = 75;
 Generations = 50;
 
 coefRangeMin = -100;
@@ -35,7 +35,7 @@ mutationFunction = @mutationadaptfeasible;
 fitnessScalingFunction = @fitscalingprop;
 
 % tournamentSize = PopulationSize * 0.1;
-tournamentSize = 6;
+tournamentSize = 2;
 selectionFunction = {@selectiontournament, tournamentSize};
 %selectionFunction = @selectionstochunif;
 
@@ -75,7 +75,7 @@ for cSpaceIteration = 1:numCspaces
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         for j=1:numSimulations
 
-        cSpaceID = -1
+        cSpaceID = j
 
         %% Number of variables in chromosome
         nvars = 5;
@@ -196,11 +196,11 @@ for cSpaceIteration = 1:numCspaces
         %fprintf('Length = (%.3g)', minLength(x, startPt, endPt));
         numGenerations = Output.generations;
         fitnessValue = Fval;
-        outputData(j+1,:) = [cSpaceID x solutionLength numCollisions maxJerk numGenerations fitnessValue gaLengthTime PopulationSize startPt endPt];
+        outputData(j,:) = [cSpaceID x solutionLength numCollisions maxJerk numGenerations fitnessValue gaLengthTime PopulationSize startPt endPt];
         end
+    save('gaData.txt', 'outputData', '-ASCII', '-append');
     end
 end
-
 %outputData(1, :) = ['cSpaceID'  'x1' 'x2' 'x3' 'x4' 'x5'  'solutionLength' 'numCollisions' 'maxJerk' 'numGenerations' 'fitnessValue' 'gaLengthTime' 'populationSize' 'startPtX' 'startPtY' 'endPtX' 'endPtY'];
-save('gaData.txt', 'outputData', '-ASCII');
+
 disp '_Done'
