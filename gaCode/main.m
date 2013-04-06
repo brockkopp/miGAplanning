@@ -9,7 +9,7 @@ f = fopen(strcat(simdir,'/gaData.mat'), 'w');
 fclose(f);
 
 %% Simulation Params
-numCspaces = 4;
+numCspaces = 3;
 numPointSets = 5;
 colors = ['b' 'r' 'g' 'k' 'c'];
 numSimulations = 5; %per points per cSpace
@@ -25,7 +25,7 @@ coefRangeMax = 100;
 obstacleWeight = 2;
 lengthWeightFactor = 0.01; 
 lineResolution = 1; % The line is checked this often for collisions against the configurations space map
-jerkWeight = 1;
+jerkWeight = 1*0;
 
 TerminationConvergenceTolerance = 0.01;
 NumGensAvg = 10;
@@ -41,7 +41,7 @@ mutationFunction = @mutationadaptfeasible;
 fitnessScalingFunction = @fitscalingprop;
 
 % tournamentSize = PopulationSize * 0.1;
-tournamentSize = 2;
+tournamentSize = 6;
 selectionFunction = {@selectiontournament, tournamentSize};
 %selectionFunction = @selectionstochunif;
 
@@ -55,7 +55,7 @@ cSpaceFilenames = [ 'cSpace2',
 
 pointSetVector = [  7, 104; 349, 112;
                    15, 142; 238, 247;
-                    7, 263; 222, 135;
+                    7, 263; 222, 159;
                    91, 222; 314,  24;
                    58, 219; 184, 341;
                   155, 318; 352, 146;
@@ -67,12 +67,12 @@ pointSetVector = [  7, 104; 349, 112;
                   143, 328; 264, 41;
                   120, 135; 263, 3;
                   65 , 208; 359, 314;
-                  115, 229; 336, 47;
-                  22 ,  59; 78 , 360;
-                  23 , 316;  88, 23;
-                  23 , 329; 60 , 329;
-                  9  , 90;  59 , 15;
-                  36 , 268; 48 , 13;]
+                  115, 229; 336, 47;]
+%                   22 ,  59; 78 , 360;
+%                   23 , 316;  88, 23;
+%                   23 , 329; 60 , 329;
+%                   9  , 90;  59 , 15;
+%                   36 , 268; 48 , 13;]
                   
                   
 
@@ -152,7 +152,7 @@ for cSpaceIteration = 1:numCspaces
         options = gaoptimset('PopInitRange',range);
         options = gaoptimset(options,'PopulationSize',PopulationSize);
         options = gaoptimset(options,'PopInitRange',PopulationInitializationRange);
-        % options = gaoptimset(options,'InitialPopulation', initialPopulation);
+%         options = gaoptimset(options,'InitialPopulation', initialPopulation);
 
         options = gaoptimset(options,'Generations',Generations);
         % options = gaoptimset(options,'PlotFcns',{@gaplotbestf, @gaplotstopping});
