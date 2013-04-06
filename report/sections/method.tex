@@ -1,6 +1,62 @@
+% CRITERIA	(2-3 pages)
+	% -Check that each claim in the intro is addressed
+	% -Forward reference evidence from a claim
+	% -Present the experiments
+	% -Analyze raw data
+	
+% OUTLINE
+	% - Setup
+		% - Criteria (Fitness)
+			% - Distance (low weight since it doesn't really matter)
+			% - Obstacle avoidance (Hight weight, mission critical)
+			% - Minimize jerk (Mid weight)
+		
+		% - Touch breifly on encoding
+			% - High order polynomial
+			% - Chromozome - integer encoding
+		% - Reporduction
+			% - Random crossovers
+		% - Mutation
+			% - Defaults or Gusen's?
+			% - Which worked out, why didn't the other?
+		% - Initialization
+			% - Random, pop size
+		% - Termination
+			% - Diversity convergence
+			% - Or top half not coliding.
+			% - Which worked out, why didn't the other?
+			
+		
+	% - run with randomly generated environments (or at least 
+		% - 1-5 objects
+		% - placed randomly w/o overlap
+		% - varying but constrained size
+		% - fized start/end points
+		% - Run 1000 times
+		% - analyze data
+		% - store data (map and the resultant path)
+
 The Genetic Algorithm (GA) formed the basis for the experiemnts. Significant effort was expended setting up the GA in advance of testing, since without a well structured algorithm, the testing was sure to show poor results. The GA was implemented on Matlab, using the built-in GA libraries in order to avoid unnecessary development. While the base functionality was used, there remained many design considerations.
 
--Check that each claim in the intro is addressed
--Forward reference evidence from a claim
--Present the experiments
--Analyze raw data
+\subsection{Configuration Space}
+Commanding a robotic manipulator's position is complicated by the fact that it cannot be specified is X-Y-Z coordinates, but rather must be commanded using joint angles. Not only is this not intuitive for a human, but existing planning techniques function using more standard X-Y or X-Y-Z coordinate systems. As such, the robot's workspace was converted into a Configuration Space. Figure \ref{fig:ws2cs} shows both the configuration space for an arbitrary workspace. In this workspace, the 2-DOF robotic manipulator is denoted by the blue and red lines (each DOF respectively) and the allowable configurations are denoted on the right by whitespace.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=3.5in]{./figures/wp2cs.eps}
+	\caption{Conversion from robot workspace to configuration space }
+	\label{fig:ws2cs}
+\end{figure}
+
+In the configuration space, the robot 
+
+\subsection{Encoding}
+The GA was developed using a linear encoding scheme, where a chromosome was defined to be an array of coefficients for a polynomial function. Therefore, the GA would ultimately return the ideal set of coefficients for a function which would describe the optimal path for the robotic manipulator. These coefficients were limited to a range of [-50,50], since larger coefficients guarantee an invalid path since it would be too large and leave the workspace. While larger coefficients do not adversely affect the result of the algorithm, the increased diversity requires significantly larger computational resources which were not avaliable.
+
+\textbf{SECTION REQUIREMENTS}
+\begin{itemize}
+\item Check that each claim in the intro is addressed
+\item Forward reference evidence from a claim
+\item Present the experiments
+\item Analyze raw data
+\end{itemize}
