@@ -19,7 +19,7 @@ coefRangeMax = 100;
 obstacleWeight = 2;
 lengthWeightFactor = 0.01; 
 lineResolution = 1; % The line is checked this often for collisions against the configurations space map
-jerkWeight = 1;
+jerkWeight = 0;
 
 TerminationConvergenceTolerance = 0.01;
 NumGensAvg = 10;
@@ -201,6 +201,6 @@ for cSpaceIteration = 1:numCspaces
     save('gaData.txt', 'outputData', '-ASCII', '-append');
     end
 end
-%outputData(1, :) = ['cSpaceID'  'x1' 'x2' 'x3' 'x4' 'x5'  'solutionLength' 'numCollisions' 'maxJerk' 'numGenerations' 'fitnessValue' 'gaLengthTime' 'populationSize' 'startPtX' 'startPtY' 'endPtX' 'endPtY'];
+%outputData(1, :) = ['cSpaceID'  'A' 'B' 'C' 'D 'E'  'solutionLength' 'numCollisions' 'maxJerk' 'numGenerations' 'fitnessValue' 'gaLengthTime' 'populationSize' 'startPtX' 'startPtY' 'endPtX' 'endPtY'];
 
 disp '_Done'
