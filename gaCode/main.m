@@ -1,12 +1,13 @@
 % reference http://www.mathworks.com/help/gads/genetic-algorithm-options.html
 
 close all
-outputData = [];
+
 %% Simulation Params
-numSimulations = 1;
+numSimulations = 3;
+outputData = zeros(numSimulations + 1, 17);
 
 %% GA Configuration Params
-PopulationSize = 200;
+PopulationSize = 25;
 Generations = 50;
 
 coefRangeMin = -100;
@@ -39,8 +40,8 @@ selectionFunction = {@selectiontournament, tournamentSize};
 
 %% Setup Plot
 %% Robot Start&End Point
-startPt = [12; 51];
-endPt = [300; 290];
+[startPt endPt] = generatePoints(cSpace);
+
 
 % Load obstacle Grid
 % obsGrid = importdata('obsGrid.mat');
@@ -61,10 +62,9 @@ t = startPt(1):0.1:endPt(1);
 % Iterate through all simulations%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 for j=1:numSimulations
-    
-    
-    
-    
+
+cSpaceID = -1
+
 %% Number of variables in chromosome
 nvars = 5;
 
@@ -126,7 +126,7 @@ gaLengthTime = toc;
 fprintf('Fitness Value = %g\n', Fval);
 fprintf('Generations   = %g\n', Output.generations);
 format short;
-fprintf('y = %.3g + (%.3g)x + (%.3g)x^2 + (%.3g)x^3 + (%.3g)x^4 \n', x(1), x(2), x(3), x(4), x(5));
+% fprintf('y = %.3g + (%.3g)x + (%.3g)x^2 + (%.3g)x^3 + (%.3g)x^4 \n', x(1), x(2), x(3), x(4), x(5));
 
 A = x(1);
 B = x(2);
@@ -143,6 +143,7 @@ dcoll = 0;
 
 y2 = @(t) sqrt(1 + (B + 2*C*t + 3*D*t.^2 + 4*E*t.^3).^2); % (B^2 + 1) + (4*B*C)*t + (4*C^2)*t.^2);
 ddist = integral(y2, startPt(1), endPt(1)) * lengthWeightFactor;
+solutionLength = ddist;
 for i=startPt(1):lineResolution:endPt(1)
     y = A + B*i + C*i^2 + D*i^3 + E*i^4;
     if (y > yDim || y < 0)
@@ -167,7 +168,7 @@ for i=startPt(1):lineResolution:endPt(1)
 end
 disp 'jerk'
 djerk * jerkWeight
-
+maxJerk = djerk;
 disp 'Obstacle'
 dcoll
 
@@ -180,10 +181,11 @@ figure(mapPlot);
 plot(t,x(1)+x(2)*t + x(3)*t.^2 + x(4)*t.^3 + x(5)*t.^4, 'r');
 
 %fprintf('Length = (%.3g)', minLength(x, startPt, endPt));
-
-outputData(j+1) = [cSpaceID, x, solutionLength, numCollisions, maxJerk, numGenerations, fitnessValue, gaLengthTime, populationSize];
+numGenerations = Output.generations;
+fitnessValue = Fval;
+outputData(j+1,:) = [cSpaceID x solutionLength numCollisions maxJerk numGenerations fitnessValue gaLengthTime PopulationSize startPt endPt];
 end
 
-outputData(1) = ['cSpaceID', 'x', 'solutionLength', 'numCollisions', 'maxJerk', 'numGenerations', 'fitnessValue', 'gaLengthTime', 'populationSize'];
-save('gaData.csv', outputData);
+%outputData(1, :) = ['cSpaceID'  'x1' 'x2' 'x3' 'x4' 'x5'  'solutionLength' 'numCollisions' 'maxJerk' 'numGenerations' 'fitnessValue' 'gaLengthTime' 'populationSize' 'startPtX' 'startPtY' 'endPtX' 'endPtY'];
+save('gaData.txt', 'outputData', '-ASCII');
 disp '_Done'
