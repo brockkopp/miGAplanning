@@ -7,7 +7,7 @@ startPos = startPt;
 endPos = endPt;
 
 %% Set up environment
-map = obsGrid(50:80, 50:90);
+map = cSpace(50:80, 50:90);
 
 % Region Bounds
 posMinBound = [0 0];
@@ -178,6 +178,7 @@ end
 len = wave(starti,startj);
 path = zeros(len,2);
 path(1,:) = [starti startj];
+pathLength = 0;
 for i=1:len
     options = [];
     if (path(i,1)>1) %left
@@ -212,6 +213,10 @@ for i=1:len
     path(i+1,:) = options(best,:);
 end
 
+pathLength = 0;
+for i=1:len
+    pathLength = pathLength + sqrt((path(i,1) - path(i+1, 1))^2 + (path(i,2) - path(i+1, 2))^2);
+end
 % figure(4); hold on;
 figure(4); clf; hold on;
 axis([0 N 0 M]);
@@ -219,7 +224,6 @@ colormap('default')
 imagesc(wave', [0 1.5*(M+N)])
 plot(finishi,finishj,'r*');
 plot(starti,startj,'b*');
-dist = curnode(2);
 plot(path(:,1),path(:,2), 'rx-')
 
 % for i=1:100

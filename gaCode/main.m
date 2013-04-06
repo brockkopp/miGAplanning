@@ -4,12 +4,13 @@ close all
 
 %% Simulation Params
 numCspaces = 4;
-numPointSets = 3;
-numSimulations = 1; %per points per cSpace
-outputData = zeros(numSimulations + 1, 17);
+numPointSets = 5;
+colors = ['b' 'r' 'g' 'k' 'c'];
+numSimulations = 5; %per points per cSpace
+outputData = zeros(numSimulations, 17);
 
 %% GA Configuration Params
-PopulationSize = 25;
+PopulationSize = 75;
 Generations = 50;
 
 coefRangeMin = -100;
@@ -34,7 +35,7 @@ mutationFunction = @mutationadaptfeasible;
 fitnessScalingFunction = @fitscalingprop;
 
 % tournamentSize = PopulationSize * 0.1;
-tournamentSize = 6;
+tournamentSize = 2;
 selectionFunction = {@selectiontournament, tournamentSize};
 %selectionFunction = @selectionstochunif;
 
@@ -47,23 +48,23 @@ cSpaceFilenames = [ 'cSpace2.mat',
                     'obsGrid.mat'];
 
 for cSpaceIteration = 1:numCspaces
-% Load obstacle Grid
-fpath = strcat('../configSpace/',  cSpaceFilenames(cSpaceIteration,:))
-obsGrid = importdata(fpath);
+    % Load obstacle Grid
+    fpath = strcat('../configSpace/',  cSpaceFilenames(cSpaceIteration,:))
+    obsGrid = importdata(fpath);
 
     mapPlot = figure; 
+    hold on;
+    [xDim yDim] = size(obsGrid);
+    axis([0 xDim 0 yDim]);
+    image(100*(1-obsGrid)');
+    colormap(gray);
     
     for pointsIteration = 1:numPointSets
     %% Robot Start&End Point
     cSpace = obsGrid;
     [startPt endPt] = generatePoints(cSpace);
 
-    hold on;
     figure(mapPlot);
-    [xDim yDim] = size(obsGrid);
-    axis([0 xDim 0 yDim]);
-    image(100*(1-obsGrid)');
-    colormap(gray);
     plot(startPt(1), startPt(2), 'g*', 'MarkerSize',6);
     plot(endPt(1), endPt(2), 'g*', 'MarkerSize',6);
 
@@ -74,7 +75,7 @@ obsGrid = importdata(fpath);
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         for j=1:numSimulations
 
-        cSpaceID = -1
+        cSpaceID = j
 
         %% Number of variables in chromosome
         nvars = 5;
@@ -84,14 +85,14 @@ obsGrid = importdata(fpath);
         upp = zeros(nvars,1);
         range = zeros(2,nvars);
 
-        min = coefRangeMin;
-        max = coefRangeMax;
+        mmin = coefRangeMin;
+        mmax = coefRangeMax;
 
         for(i = 1:nvars)
-            low(i) = min;
-            upp(i) = max;
-            range(1,i) = min;
-            range(2,i) = max;
+            low(i) = mmin;
+            upp(i) = mmax;
+            range(1,i) = mmin;
+            range(2,i) = mmax;
         end
         PopulationInitializationRange = range;
         %% Linear Equalities
@@ -189,16 +190,17 @@ obsGrid = importdata(fpath);
         % fprintf('Number of Collisions: %g\n', numCollisions);
 
         figure(mapPlot);
-        plot(t,x(1)+x(2)*t + x(3)*t.^2 + x(4)*t.^3 + x(5)*t.^4, 'r');
+        hold on;
+        plot(t,x(1)+x(2)*t + x(3)*t.^2 + x(4)*t.^3 + x(5)*t.^4, colors(pointsIteration));  %'r');
 
         %fprintf('Length = (%.3g)', minLength(x, startPt, endPt));
         numGenerations = Output.generations;
         fitnessValue = Fval;
-        outputData(j+1,:) = [cSpaceID x solutionLength numCollisions maxJerk numGenerations fitnessValue gaLengthTime PopulationSize startPt endPt];
+        outputData(j,:) = [cSpaceID x solutionLength numCollisions maxJerk numGenerations fitnessValue gaLengthTime PopulationSize startPt endPt];
         end
+    save('gaData.txt', 'outputData', '-ASCII', '-append');
     end
 end
-
 %outputData(1, :) = ['cSpaceID'  'x1' 'x2' 'x3' 'x4' 'x5'  'solutionLength' 'numCollisions' 'maxJerk' 'numGenerations' 'fitnessValue' 'gaLengthTime' 'populationSize' 'startPtX' 'startPtY' 'endPtX' 'endPtY'];
-save('gaData.txt', 'outputData', '-ASCII');
+
 disp '_Done'
