@@ -1,4 +1,4 @@
-function [fig] = plotAll( world, armPos, cSpace )
+function [fig] = plotAll( world, armPos, cSpace, start, finish )
 
     [WxDim WyDim] = size(world);
     worldAxes = [0 WxDim 0 WyDim];
@@ -22,6 +22,8 @@ function [fig] = plotAll( world, armPos, cSpace )
         subplot(1,2,2);
             image(100*(1-cSpace)');
             colormap(gray);
+            plot(start,'r+','MarkerSize',10);
+            plot(finish,'b+','MarkerSize',10);
             axis (cSpaceAxes);
             title('Configuration Space','FontSize',14);
             xlabel('Joint 1 Angle (deg)','FontSize',12,'Color','b')
