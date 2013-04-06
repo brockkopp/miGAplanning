@@ -53,7 +53,7 @@ cSpaceFilenames = [ 'cSpace2',
                     'cSpace4',
                     'obsGrid'];
 
-pointSetVector = [  7, 104; 394, 112;
+pointSetVector = [  7, 104; 349, 112;
                    15, 142; 238, 247;
                     7, 263; 222, 135;
                    91, 222; 314,  24;
