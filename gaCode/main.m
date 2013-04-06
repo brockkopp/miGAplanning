@@ -1,7 +1,7 @@
 % reference http://www.mathworks.com/help/gads/genetic-algorithm-options.html
 close all
 
-simName = 'test';
+simName = 'pop200';
 simdir = strcat('sim_', simName);
 mkdir(simdir);
 
@@ -16,18 +16,18 @@ numSimulations = 5; %per points per cSpace
 outputData = zeros(numSimulations, 18);
 
 %% GA Configuration Params
-PopulationSize = 75;
+PopulationSize = 200;
 Generations = 50;
 
-coefRangeMin = -100;
-coefRangeMax = 100;
+coefRangeMin = -150;
+coefRangeMax = 150;
 
 obstacleWeight = 2;
 lengthWeightFactor = 0.01; 
 lineResolution = 1; % The line is checked this often for collisions against the configurations space map
-jerkWeight = 1*0;
+jerkWeight = 1;
 
-TerminationConvergenceTolerance = 0.01;
+TerminationConvergenceTolerance = 0.001;
 NumGensAvg = 10;
 
 crossoverFraction = 0.80; % fraction of population that will reproduce
@@ -41,7 +41,7 @@ mutationFunction = @mutationadaptfeasible;
 fitnessScalingFunction = @fitscalingprop;
 
 % tournamentSize = PopulationSize * 0.1;
-tournamentSize = 6;
+tournamentSize = 2;
 selectionFunction = {@selectiontournament, tournamentSize};
 %selectionFunction = @selectionstochunif;
 
@@ -95,8 +95,8 @@ for cSpaceIteration = 1:numCspaces
     %% Robot Start&End Point
     cSpace = obsGrid;
 %     [startPt endPt] = generatePoints(cSpace);
-    startPt = [pointSetVector(pointsIteration, 1), pointSetVector(pointsIteration, 2)];
-    endPt =   [pointSetVector(pointsIteration + 1, 1), pointSetVector(pointsIteration + 1, 2)];
+    startPt = [pointSetVector(pointsIteration*2-1, 1), pointSetVector(pointsIteration, 2)];
+    endPt =   [pointSetVector(pointsIteration*2 + 1, 1), pointSetVector(pointsIteration + 1, 2)];
     
     figure(mapPlot);
     plot(startPt(1), startPt(2), 'g*', 'MarkerSize',6);
@@ -108,9 +108,6 @@ for cSpaceIteration = 1:numCspaces
     % Iterate through all simulations%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         for j=1:numSimulations
-
-        
-
         %% Number of variables in chromosome
         nvars = 5;
 
