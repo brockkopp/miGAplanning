@@ -1,11 +1,13 @@
-function [ cSpace, F ] = buildCspace( armBase, armLen, world, limits, F )
+function [ cSpace, F ] = buildCspace( armBase, armLen, world, limits )
 
     h = waitbar(0,'Initializing');
 
     cSpace = 0.5*ones(limits(2)-limits(1)+1,limits(4)-limits(3)+1);
-    [xDim yDim] = size(world);
+    [xDim, yDim] = size(world);
     
-    frm = 1;
+    F = 0;
+    
+%     frm = 1;
 %     fig = figure(3);
 %     winsize = get(figure(3),'Position');
 %     winsize(1:2) = [0 0];
@@ -56,8 +58,8 @@ function [ cSpace, F ] = buildCspace( armBase, armLen, world, limits, F )
         end %End For
     end %End alpha loop
     
-    plotAll( world, armPos, cSpace );
-    F(frm) = getframe(figure(3));
+%     plotAll( world, armPos, cSpace );
+%     F(frm) = getframe(figure(3));
     close(h);
 end
 
