@@ -1,0 +1,269 @@
+%% bare_conf.tex
+%% V1.2
+%% 2002/11/18
+%% by Michael Shell
+%% mshell@ece.gatech.edu
+
+% setup page to suit conference specification using fancyhdr
+\documentclass[conference,letterpaper]{IEEEtran}
+
+%\usepackage{fancyhdr}
+%\setlength{\paperwidth}{215.9mm}
+%\setlength{\hoffset}{-9.7mm}
+%\setlength{\oddsidemargin}{0mm}
+%\setlength{\textwidth}{184.3mm}
+%\setlength{\columnsep}{6.3mm}
+%\setlength{\marginparsep}{0mm}
+%\setlength{\marginparwidth}{0mm}
+%
+%\setlength{\paperheight}{279.4mm}
+%\setlength{\voffset}{-7.4mm}
+%\setlength{\topmargin}{0mm}
+%\setlength{\headheight}{0mm}
+%\setlength{\headsep}{0mm}
+%\setlength{\topskip}{0mm}
+%\setlength{\textheight}{235.2mm}
+%\setlength{\footskip}{12.4mm}
+
+\setlength{\parindent}{1pc}
+
+
+\usepackage{fancyhdr}
+
+% some very useful LaTeX packages include:
+
+\usepackage{cite}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{stfloats}
+
+%\usepackage{graphicx}
+
+%\usepackage{subfigure} % Written by Steven Douglas Cochran
+                        % This package makes it easy to put subfigures
+                        % in your figures. i.e., "figure 1a and 1b"
+                        % Docs are in "Using Imported Graphics in LaTeX2e"
+                        % by Keith Reckdahl which also documents the graphicx
+                        % package (see above). subfigure.sty is already
+                        % installed on most LaTeX systems. The latest version
+                        % and documentation can be obtained at:
+                        % http://www.ctan.org/tex-archive/macros/latex/contrib/supported/subfigure/
+
+
+% Other popular packages for formatting tables and equations include:
+
+%\usepackage{array}
+% Frank Mittelbach's and David Carlisle's array.sty which improves the
+% LaTeX2e array and tabular environments to provide better appearances and
+% additional user controls. array.sty is already installed on most systems.
+% The latest version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/tools/
+
+% Mark Wooding's extremely powerful MDW tools, especially mdwmath.sty and
+% mdwtab.sty which are used to format equations and tables, respectively.
+% The MDWtools set is already installed on most LaTeX systems. The lastest
+% version and documentation is available at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/supported/mdwtools/
+
+
+% V1.6 of IEEEtran contains the IEEEeqnarray family of commands that can
+% be used to generate multiline equations as well as matrices, tables, etc.
+
+
+% Also of notable interest:
+
+% Scott Pakin's eqparbox package for creating (automatically sized) equal
+% width boxes. Available:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/supported/eqparbox/
+
+
+% Notes on hyperref:
+% IEEEtran.cls attempts to be compliant with the hyperref package, written
+% by Heiko Oberdiek and Sebastian Rahtz, which provides hyperlinks within
+% a document as well as an index for PDF files (produced via pdflatex).
+% However, it is a tad difficult to properly interface LaTeX classes and
+% packages with this (necessarily) complex and invasive package. It is
+% recommended that hyperref not be used for work that is to be submitted
+% to the IEEE. Users who wish to use hyperref *must* ensure that their
+% hyperref version is 6.72u or later *and* IEEEtran.cls is version 1.6b
+% or later. The latest version of hyperref can be obtained at:
+%
+% http://www.ctan.org/tex-archive/macros/latex/contrib/supported/hyperref/
+%
+% Also, be aware that cite.sty (as of version 3.9, 11/2001) and hyperref.sty
+% (as of version 6.72t, 2002/07/25) do not work optimally together.
+% To mediate the differences between these two packages, IEEEtran.cls, as
+% of v1.6b, predefines a command that fools hyperref into thinking that
+% the natbib package is being used - causing it not to modify the existing
+% citation commands, and allowing cite.sty to operate as normal. However,
+% as a result, citation numbers will not be hyperlinked. Another side effect
+% of this approach is that the natbib.sty package will not properly load
+% under IEEEtran.cls. However, current versions of natbib are not capable
+% of compressing and sorting citation numbers in IEEE's style - so this
+% should not be an issue. If, for some strange reason, the user wants to
+% load natbib.sty under IEEEtran.cls, the following code must be placed
+% before natbib.sty can be loaded:
+%
+% \makeatletter
+% \let\NAT@parse\undefined
+% \makeatother
+%
+% Hyperref should be loaded differently depending on whether pdflatex
+% or traditional latex is being used:
+%
+\ifx\pdfoutput\undefined
+\usepackage[hidelinks,hypertex]{hyperref}
+\else
+\usepackage[pdftex,hidelinks,hypertexnames=false]{hyperref}
+\fi
+
+
+\begin{document}
+% paper title
+\title{A Motion Planning Method Based on Genertic Algorithms and Curve Fitting Techniques}
+\newcommand{\Keywords}{Genertic Algorithms, Curve Fitting, Path Planning, Grid Method, Robotics}
+
+% author names and affiliations
+% use a multiple column layout for up to three different
+% affiliations
+\author{
+\IEEEauthorblockN{Brock Kopp}
+\IEEEauthorblockA{Mechatronics Engineering\\
+	University of Waterloo\\
+	Waterloo, Ontario\\
+	brock.kopp@uwaterloo.ca}
+\and
+\IEEEauthorblockN{Karl Price}
+\IEEEauthorblockA{Mechatronics Engineering\\
+	University of Waterloo\\
+	Waterloo, Ontario\\
+	karldprice@gmail.com}
+\and
+\IEEEauthorblockN{Angelica Ruszkowski}
+\IEEEauthorblockA{Mechatronics Engineering\\
+	University of Waterloo\\
+	Waterloo, Ontario\\
+	aruszkow@uwaterloo.ca}}
+
+% make the title area
+\maketitle
+\thispagestyle{plain}
+
+% insert page header and footer here for IEEE PDF Compliant
+\fancypagestyle{plain}{
+\fancyhf{}	% clear all header and footer fields
+\fancyfoot[L]{}
+\fancyfoot[C]{}
+\fancyfoot[R]{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+}
+
+\pagestyle{fancy}{
+\fancyhf{}
+\fancyfoot[R]{}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+
+\begin{abstract}
+\input{./sections/abstract.tex}
+\end{abstract}
+
+\vspace{3mm}	%Brock
+
+\begin{IEEEkeywords}
+\Keywords
+\end{IEEEkeywords}
+
+\section{Introduction}
+\input{./sections/introduction.tex}
+
+\section{Background Review}
+\input{./sections/background.tex}
+
+\section{Method}
+\input{./sections/method.tex}
+
+\section{Results}
+\input{./sections/results.tex}
+
+\section{Discussion}
+\input{./sections/discussion.tex}
+
+\section{Conclusions}
+\input{./sections/conclusions.tex}
+
+
+% An example of a floating figure using the graphicx package.
+% Note that \label must occur AFTER (or within) \caption.
+% For figures, \caption should occur after the \includegraphics.
+%
+% \begin{figure}
+% \centering
+% \includegraphics[width=2.5in]{myfigure}
+% where an .eps filename suffix will be assumed under latex,
+% and a .pdf suffix will be assumed for pdflatex
+% \caption{Simulation Results}
+% \label{fig_sim}
+% \end{figure}
+
+
+% An example of a double column floating figure using two subfigures.
+% (The subfigure.sty package must be loaded for this to work.)
+% The subfigure \label commands are set within each subfigure command, the
+% \label for the overall fgure must come after \caption.
+% \hfil must be used as a separator to get equal spacing
+%
+% \begin{figure*}
+% \centerline{\subfigure[Case I]{\includegraphics[width=2.5in]{subfigcase1}
+% where an .eps filename suffix will be assumed under latex,
+% and a .pdf suffix will be assumed for pdflatex
+% \label{fig_first_case}}
+% \hfil
+% \subfigure[Case II]{\includegraphics[width=2.5in]{subfigcase2}
+% where an .eps filename suffix will be assumed under latex,
+% and a .pdf suffix will be assumed for pdflatex
+% \label{fig_second_case}}}
+% \caption{Simulation results}
+% \label{fig_sim}
+% \end{figure*}
+
+
+% An example of a floating table. Note that, for IEEE style tables, the
+% \caption command should come BEFORE the table. Table text will default to
+% \footnotesize as IEEE normally uses this smaller font for tables.
+% The \label must come after \caption as always.
+%
+% \begin{table}
+% increase table row spacing, adjust to taste
+% \renewcommand{\arraystretch}{1.3}
+% \caption{An Example of a Table}
+% \label{table_example}
+% \begin{center}
+% Some packages, such as MDW tools, offer better commands for making tables
+% than the plain LaTeX2e tabular which is used here.
+% \begin{tabular}{|c||c|}
+% \hline
+% One & Two\\
+% \hline
+% Three & Four\\
+% \hline
+% \end{tabular}
+% \end{center}
+% \end{table}
+
+% trigger a \newpage just before the given reference
+% number - used to balance the columns on the last page
+% adjust value as needed - may need to be readjusted if
+% the document is modified later
+% \IEEEtriggeratref{8}
+% The "triggered" command can be changed if desired:
+% \IEEEtriggercmd{\enlargethispage{-5in}}
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,miGAplanning}
+
+% that's all folks
+\end{document} 
