@@ -26,11 +26,15 @@ obstacles = zeros(numObs,4);
 %     obstacles(i,:) = [ origX-rad origX+rad origY-rad origY+rad ];
 % end
 
+% obsSet(4,1,:) = [220 250 170 200];
+% obsSet(4,2,:) = [150 180 225 240];
+% obsSet(4,3,:) = [150 180  50  75];
+% obsSet(4,4,:) = [ 60  80 125 175];
+
 obstacles(1,:) = [220 250 170 200];
 obstacles(2,:) = [150 180 225 240];
 obstacles(3,:) = [150 180  50  75];
 obstacles(4,:) = [ 60  80 125 175];
-
 
 for obs=1:length(obstacles(:,1))
     for i=1:xDim
@@ -42,17 +46,25 @@ for obs=1:length(obstacles(:,1))
     end
 end
 
-
-
-% plotWorld(world, armPos);
-
 %% Calcular Configuration Space
 % if(~exist('cSpace','var'))
-    cSpaceLimits = [1 360 1 360];
-    [cSpace F] = buildCspace(armBase, armLen, world, cSpaceLimits);
+%     cSpaceLimits = [1 360 1 360];
+%     [cSpace F] = buildCspace(armBase, armLen, world, cSpaceLimits);
 % end
 
 %% Plots
 % plotWorld(world, armPos);
 % plotCspace( cSpace );
-plotAll( world, armPos, cSpace );
+
+
+start = [0 0];
+while (start == [0 0] || cSpace(start) == 1
+    start = [round(360*rand(1,1)) round(360*rand(1,1))];
+end
+
+finish = [0 0];
+while start == [0 0] || cSpace(start) == 1
+    finish = [round(360*rand(1,1)) round(360*rand(1,1))];
+end
+
+plotAll( world, armPos, cSpace, start, end );
