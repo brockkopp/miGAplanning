@@ -1,7 +1,7 @@
 % reference http://www.mathworks.com/help/gads/genetic-algorithm-options.html
 close all
 
-simName = 'pop200';
+simName = 'cubic';
 simdir = strcat('sim_', simName);
 mkdir(simdir);
 
@@ -19,8 +19,8 @@ outputData = zeros(numSimulations, 17);
 PopulationSize = 75;
 Generations = 50;
 
-coefRangeMin = -150;
-coefRangeMax = 150;
+coefRangeMin = -500;
+coefRangeMax = 500;
 
 obstacleWeight = 2;
 lengthWeightFactor = 0.01; 
