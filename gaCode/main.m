@@ -191,6 +191,7 @@ for cSpaceIteration = 1:numCspaces
             if (y > yDim || y < 0)
         %         offScreen = 1;
                 numCollisions = 10000;
+                dcoll = 10000;
                 break;
             elseif (obsGrid(i,ceil(y)) == 1) %if within obstacle
                 numCollisions = numCollisions + collision;
@@ -226,7 +227,7 @@ for cSpaceIteration = 1:numCspaces
         %fprintf('Length = (%.3g)', minLength(x, startPt, endPt));
         numGenerations = Output.generations;
         fitnessValue = Fval;
-        outputData(j,:) = [cSpaceID pointSetID x solutionLength numCollisions maxJerk numGenerations fitnessValue gaLengthTime PopulationSize startPt endPt];
+        outputData(j,:) = [cSpaceID pointSetID x solutionLength dcoll maxJerk numGenerations fitnessValue gaLengthTime PopulationSize startPt endPt];
         end
     save(strcat(simdir,'/gaData.txt'), 'outputData', '-ASCII', '-append');
 
@@ -234,6 +235,6 @@ for cSpaceIteration = 1:numCspaces
     figname = strcat(simdir, '/' ,cSpaceFilenames(cSpaceIteration,:), '.fig');
     saveas(figure(cSpaceIteration), figname);
 end
-%outputData(1, :) = ['cSpaceID' 'pointSetID'  'A' 'B' 'C' 'D 'E'  'solutionLength' 'numCollisions' 'maxJerk' 'numGenerations' 'fitnessValue' 'gaLengthTime' 'populationSize' 'startPtX' 'startPtY' 'endPtX' 'endPtY'];
+%outputData(1, :) = ['cSpaceID' 'pointSetID'  'A' 'B' 'C' 'D 'solutionLength' 'numCollisions' 'maxJerk' 'numGenerations' 'fitnessValue' 'gaLengthTime' 'populationSize' 'startPtX' 'startPtY' 'endPtX' 'endPtY'];
 
 disp '_Done'
