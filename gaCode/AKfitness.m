@@ -8,7 +8,6 @@ A = x(1);
 B = x(2);
 C = x(3);
 D = x(4);
-E = x(5);
 
 %Import grid from workspace
 obstacleGrid = evalin('base','obsGrid');
@@ -28,17 +27,17 @@ MIN_Y = 0;
 % t = startPt(1):0.1:endPt(1);
 % y = sqrt((B^2 + 1) + (4*B*C)*t + (4*C^2)*t*t);
 
-y2 = @(t) sqrt(1 + (B + 2*C*t + 3*D*t.^2 + 4*E*t.^3).^2); % (B^2 + 1) + (4*B*C)*t + (4*C^2)*t.^2);
+y2 = @(t) sqrt(1 + (B + 2*C*t + 3*D*t.^2).^2); % (B^2 + 1) + (4*B*C)*t + (4*C^2)*t.^2);
 dist = integral(y2, startPt(1), endPt(1));
 
 % Punish for Obstacle
 obstaclePunishment = 0;
 maxJerk = 0;
 for i=startPt(1):lineResolution:endPt(1)
-    y = A + B*i + C*i^2 + D*i^3   + E*i^4;
-    y_v =   B   + 2*C*i + 3*D*i^2 + 4*E*i^3;
+    y = A + B*i + C*i^2 + D*i^3;
+    y_v =   B   + 2*C*i + 3*D*i^2;
 %     y_a =         2*C   + 6*D*i   + 12*E*i^2;
-    y_jerk =                 6*D     + 24*E*i;
+    y_jerk =                 6*D;
     
     % Penalize Length
     if (y > MAX_Y || y < MIN_Y)

@@ -13,10 +13,10 @@ numCspaces = 3;
 numPointSets = 5;
 colors = ['b' 'r' 'g' 'k' 'c'];
 numSimulations = 5; %per points per cSpace
-outputData = zeros(numSimulations, 18);
+outputData = zeros(numSimulations, 17);
 
 %% GA Configuration Params
-PopulationSize = 200;
+PopulationSize = 75;
 Generations = 50;
 
 coefRangeMin = -150;
@@ -55,7 +55,7 @@ cSpaceFilenames = [ 'cSpace2',
 
 pointSetVector = [  7, 104; 349, 112;
                    15, 142; 238, 247;
-                    7, 263; 222, 159;
+                    7, 263; 311, 159;
                    91, 222; 314,  24;
                    58, 219; 184, 341;
                   155, 318; 352, 146;
@@ -90,13 +90,13 @@ for cSpaceIteration = 1:numCspaces
     image(100*(1-obsGrid)');
     colormap(gray);
     
-    for pointsIteration = 1:2:numPointSets
+    for pointsIteration = 1:numPointSets
     pointSetID = pointsIteration;
     %% Robot Start&End Point
     cSpace = obsGrid;
 %     [startPt endPt] = generatePoints(cSpace);
-    startPt = [pointSetVector(pointsIteration*2-1, 1), pointSetVector(pointsIteration, 2)];
-    endPt =   [pointSetVector(pointsIteration*2 + 1, 1), pointSetVector(pointsIteration + 1, 2)];
+    startPt = [pointSetVector(pointsIteration*2-1 + (cSpaceIteration-1)*10, 1), pointSetVector(pointsIteration*2-1 + (cSpaceIteration-1)*10, 2)];
+    endPt =   [pointSetVector(pointsIteration*2 + (cSpaceIteration-1)*10, 1), pointSetVector(pointsIteration*2 + (cSpaceIteration-1)*10, 2)];
     
     figure(mapPlot);
     plot(startPt(1), startPt(2), 'g*', 'MarkerSize',6);
@@ -109,7 +109,7 @@ for cSpaceIteration = 1:numCspaces
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         for j=1:numSimulations
         %% Number of variables in chromosome
-        nvars = 5;
+        nvars = 4;
 
         %% Coefficient (Gene) cosntraints
         low = zeros(nvars,1);
@@ -175,7 +175,6 @@ for cSpaceIteration = 1:numCspaces
         B = x(2);
         C = x(3);
         D = x(4);
-        E = x(5);
 
         collision = 1;
         offScreen = 0;
@@ -184,11 +183,11 @@ for cSpaceIteration = 1:numCspaces
         ddist = 0;
         dcoll = 0;
 
-        y2 = @(t) sqrt(1 + (B + 2*C*t + 3*D*t.^2 + 4*E*t.^3).^2); % (B^2 + 1) + (4*B*C)*t + (4*C^2)*t.^2);
+        y2 = @(t) sqrt(1 + (B + 2*C*t + 3*D*t.^2).^2); % (B^2 + 1) + (4*B*C)*t + (4*C^2)*t.^2);
         ddist = integral(y2, startPt(1), endPt(1)) * lengthWeightFactor;
         solutionLength = ddist;
         for i=startPt(1):lineResolution:endPt(1)
-            y = A + B*i + C*i^2 + D*i^3 + E*i^4;
+            y = A + B*i + C*i^2 + D*i^3;
             if (y > yDim || y < 0)
         %         offScreen = 1;
                 numCollisions = 10000;
@@ -197,9 +196,9 @@ for cSpaceIteration = 1:numCspaces
                 numCollisions = numCollisions + collision;
                 dcoll = dcoll + obstacleWeight * ceil(abs(y_v));
             end
-            y_v =   B   + 2*C*i + 3*D*i^2 + 4*E*i^3;
+            y_v =   B   + 2*C*i + 3*D*i^2;
         %     y_a =         2*C   + 6*D*i   + 12*E*i^2;
-            y_jerk =                 6*D     + 24*E*i;
+            y_jerk =                 6*D ;
             if (y_jerk > djerk)
                 djerk = y_jerk;
             end
@@ -222,7 +221,7 @@ for cSpaceIteration = 1:numCspaces
 
         figure(mapPlot);
         hold on;
-        plot(t,x(1)+x(2)*t + x(3)*t.^2 + x(4)*t.^3 + x(5)*t.^4, colors(pointsIteration));  %'r');
+        plot(t,x(1)+x(2)*t + x(3)*t.^2 + x(4)*t.^3, colors(pointsIteration));  %'r');
 
         %fprintf('Length = (%.3g)', minLength(x, startPt, endPt));
         numGenerations = Output.generations;
