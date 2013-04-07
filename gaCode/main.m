@@ -1,7 +1,7 @@
 % reference http://www.mathworks.com/help/gads/genetic-algorithm-options.html
 close all
 
-simName = 'cubic_nojerk';
+simName = 'baseline_600_tests';
 simdir = strcat('sim_', simName);
 mkdir(simdir);
 
@@ -12,7 +12,7 @@ fclose(f);
 numCspaces = 3;
 numPointSets = 5;
 colors = ['b' 'r' 'g' 'k' 'c'];
-numSimulations = 5; %per points per cSpace
+numSimulations = 40; %per points per cSpace
 outputData = zeros(numSimulations, 17);
 
 %% GA Configuration Params
@@ -25,7 +25,7 @@ coefRangeMax = 500;
 obstacleWeight = 2;
 lengthWeightFactor = 0.01; 
 lineResolution = 1; % The line is checked this often for collisions against the configurations space map
-jerkWeight = 1*0;
+jerkWeight = 1;
 
 TerminationConvergenceTolerance = 0.001;
 NumGensAvg = 10;
@@ -232,7 +232,7 @@ for cSpaceIteration = 1:numCspaces
 
     end
     figname = strcat(simdir, '/' ,cSpaceFilenames(cSpaceIteration,:), '.fig');
-    saveas(figure(1), figname);
+    saveas(figure(cSpaceIteration), figname);
 end
 %outputData(1, :) = ['cSpaceID' 'pointSetID'  'A' 'B' 'C' 'D 'E'  'solutionLength' 'numCollisions' 'maxJerk' 'numGenerations' 'fitnessValue' 'gaLengthTime' 'populationSize' 'startPtX' 'startPtY' 'endPtX' 'endPtY'];
 
