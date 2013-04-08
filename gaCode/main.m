@@ -1,7 +1,7 @@
 % reference http://www.mathworks.com/help/gads/genetic-algorithm-options.html
 close all
 
-simName = 'baseline_600nojerk_tests';
+simName = 'baseline_7500';
 simdir = strcat('sim_', simName);
 mkdir(simdir);
 
@@ -12,7 +12,7 @@ fclose(f);
 numCspaces = 3;
 numPointSets = 5;
 colors = ['b' 'r' 'g' 'k' 'c'];
-numSimulations = 40; %per points per cSpace
+numSimulations = 500; %per points per cSpace
 outputData = zeros(numSimulations, 17);
 
 %% GA Configuration Params

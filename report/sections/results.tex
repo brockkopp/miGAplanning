@@ -6,6 +6,34 @@
 	% - Dynamics, how often they are under an acceptable value
 	% - How many times it finds a sucessful path w/o collisions
 	% - Calculation time compared to wavefront
-	
-\subsection{Results} \label{sec:results}
-As mentioned in section \ref{sec:experiment}
+As mentioned in section \ref{sec:experiment}, the following results were obtained through a test of 600 trials of running the genetic algorithm. Robot configuration spaces were generated based on physical environments which featured objects randomly placed in the robot's path. Three conficuration spaces were chosen based on how densly populated teh environment was with obstacles to present a range of environments in which to test the algorithm. Next, within each of these three environments, five sets of start and end points were generated randomly. The points were inspected to ensure that no invalid point configurations were present. The algorithm was then run 40 times on each point set, and with five point sets per environment and three environments, 600 trials were conducted.
+
+Figure \ref{fig:result} shows a visualization of 40 trials conducted on five start\/end point sets on a populated configuration space. Note that each line in the visualization represents a full evolution cycle with a population of 75 individuals.
+
+\begin{figure}[h] \label{fig:result}
+	\centering
+	\includegraphics[width=0.55\textwidth]{./figures/results_cSpace4.eps}
+	\caption{Resultant optimized paths from 40 trials on five start\/end point sets. Axis represent the full range of motion of joints one and two of the manipulator.}
+	\label{fig:ws2cs}
+\end{figure}
+
+The results of the experiment are presented in table \ref{tbl:results}.
+
+	\begin{center}
+		\begin{tabular}{ | c | c | c | c |}
+		\hline
+		Day & Min Temp & Max Temp & Summary \\ \hline
+		Monday & 11C & 22C & A clear day with lots of sunshine.  
+		However, the strong breeze will bring down the temperatures. \\ \hline
+		Tuesday & 9C & 19C & Cloudy with rain, across many northern regions. Clear spells
+		across most of Scotland and Northern Ireland,
+		but rain reaching the far northwest. \\ \hline
+		Wednesday & 10C & 21C & Rain will still linger for the morning.
+		Conditions will improve by early afternoon and continue
+		throughout the evening. \\
+		\hline
+		\end{tabular}
+	\end{center}
+
+
+

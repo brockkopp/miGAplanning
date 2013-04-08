@@ -52,7 +52,7 @@ Commanding a robotic manipulator's position is complicated by the fact that it c
 
 \begin{figure}[h]
 	\centering
-	\includegraphics{./figures/wp2cs.eps}
+	\includegraphics[width=3.5in]{./figures/wp2cs.eps}
 	\caption{Conversion from robot workspace to configuration space }
 	\label{fig:ws2cs}
 \end{figure}
@@ -73,7 +73,7 @@ involved. The goal is to generate a path that avoids all obstacles, as well as m
 minimize jerk. The problem is further constrained by the start and end points. The generated polynomial path must go through these desired start and end points.
 
 To solve this constrained optimization problem, linear equality constraints are used. Linear equalities
-have the form :
+have the form:
 
 \begin{equation}
 A_{eq}x = b_{eq}
