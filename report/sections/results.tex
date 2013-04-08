@@ -13,27 +13,28 @@ Figure \ref{fig:result} shows a visualization of 40 trials conducted on five sta
 \begin{figure}[h] \label{fig:result}
 	\centering
 	\includegraphics[width=0.55\textwidth]{./figures/results_cSpace4.eps}
-	\caption{Resultant optimized paths from 40 trials on five start\/end point sets. Axis represent the full range of motion of joints one and two of the manipulator.}
+	\caption{Resultant optimized paths from 40 trials on five start\/end point sets. Axis represent the full range of motion of joints one and two of the manipulator. The algorithm avoids the black areas which represent obstacle collisions.}
 	\label{fig:ws2cs}
 \end{figure}
 
 The results of the experiment are presented in table \ref{tbl:results}.
+number of trials run: 600
 
+{\renewcommand{\arraystretch}{1.4}
 	\begin{center}
-		\begin{tabular}{ | c | c | c | c |}
-		\hline
-		Day & Min Temp & Max Temp & Summary \\ \hline
-		Monday & 11C & 22C & A clear day with lots of sunshine.  
-		However, the strong breeze will bring down the temperatures. \\ \hline
-		Tuesday & 9C & 19C & Cloudy with rain, across many northern regions. Clear spells
-		across most of Scotland and Northern Ireland,
-		but rain reaching the far northwest. \\ \hline
-		Wednesday & 10C & 21C & Rain will still linger for the morning.
-		Conditions will improve by early afternoon and continue
-		throughout the evening. \\
-		\hline
+		\begin{table}[h]
+		\begin{tabular}{ c | c  c  p{2cm} }
+		Criteria & Result & Unit & Note \\ \hline
+		Path length & 0.7 & \% longer & Compared to wavefront method \\ 
+		Freq. of shorter path & 79 & \% & Compared to wavefront method \\ 
+		Time to completion & 5.15 & seconds & 20767\% improvement on wavefront method \\ 
+		Average number of generations & 12.3 & generations & \\ 
+		Freq. of collision free path & 94 & \% &  \\ 
+		Jerk improvement & 194 & ${{D}\over{T^3}}$ & Compared to implementation not minimizing jerk.\\ 
 		\end{tabular}
+		\caption{Results obtained through 600 trials of the path finding algorithm.}
+		\end{table}
 	\end{center}
-
+}
 
 
