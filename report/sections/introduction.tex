@@ -13,7 +13,7 @@ As a stochastic optimization technique, a genetic algorithm will find the global
 
 The robot's environment and obstacles will be represented in a discretized grid, and polynomial curve fitting techniques will be used to define the optimum path from the start to the end location through the specified environment. The curve fitting method helps simplify and expedite the generation of a desired path, compared to commonly used techniques such as rapidly exploring random trees \cite{rodriguez06}. The genetic algorithm will determine the polynomial coefficients which result in a curve with the greatest fitness, as determined by the constraints of the problem (namely path distance and jerk). A polynomial function was selected to describe the path since it inherently results in a continuous trajectory rather than traditional discontinuous waypoint based trajectories. 
 
-While there is no absolute best path planning algorithm for all situations, this paper will show that:
+While there is no absolute best path planning algorithm for all situations, it is proposed that:
 \begin{itemize}
 	\item A Genetic Algorithm can effectively plan a path through a robotic manipulator's configuration space.
 	\item The algorithm presented can plan a path which not only minizes distace travelled, but also account for robotic manipulator dynamics such as acceleration and jerk.

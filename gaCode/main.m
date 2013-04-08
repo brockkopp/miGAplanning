@@ -1,7 +1,7 @@
 % reference http://www.mathworks.com/help/gads/genetic-algorithm-options.html
 close all
 
-simName = 'baseline_600_tests';
+simName = 'baseline_600nojerk_tests';
 simdir = strcat('sim_', simName);
 mkdir(simdir);
 
@@ -25,7 +25,7 @@ coefRangeMax = 500;
 obstacleWeight = 2;
 lengthWeightFactor = 0.01; 
 lineResolution = 1; % The line is checked this often for collisions against the configurations space map
-jerkWeight = 1;
+jerkWeight = 1*0;
 
 TerminationConvergenceTolerance = 0.001;
 NumGensAvg = 10;

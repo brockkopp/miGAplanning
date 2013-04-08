@@ -52,7 +52,7 @@ Commanding a robotic manipulator's position is complicated by the fact that it c
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=3.5in]{./figures/wp2cs.eps}
+	\includegraphics{./figures/wp2cs.eps}
 	\caption{Conversion from robot workspace to configuration space }
 	\label{fig:ws2cs}
 \end{figure}
@@ -82,7 +82,7 @@ A_{eq}x = b_{eq}
 where x are the variables being optimized. For this project, the optimization variables are the
 coefficients of the polynomial.
 
-For example, a second order polynomial $y = A + Bx + Cx^2$ through points \[1 2\] and \[10 5\] would have linear constraints of the form:
+For example, a second order polynomial $y = A + Bx + Cx^2$ through points $[1 2]$ and $[10 5]$ would have linear constraints of the form:
 \begin{equation} 
 \begin{bmatrix}
 1 & 10 & 10^2 \\
@@ -115,5 +115,5 @@ Mutation was achieved applyinh a completely random mutation to a coefficient wit
 \subsection{Termination}
 The termination criteria allow the GA to determine when it has reached the optimal solution to the problem. In this implementation, a termination criteria based on convergence of the fitness function was used. The mean fitness value over ten generations was averaged. When the this averaged mean fitness value converged within 0.001 units, the algorithm was terminated. This is representative of a situation where the diversity of the function has been reduced, and the algorithm has converged on a minimum fitness value.
 
-\subsection{Experiment}
+\subsection{Experiment} \label{sec:experiment}
 In order to assess the performance of the GA approach, an extensive experiment was devised. The algorithm was run 600 times on 15 sets of randomly generated points in 3 environments with randomly positionned obstacles. Invalid combinations of point sets were removed from the dataset and new points were randomly generated to replace them. The environments were chosen to represent environments which were sparsely populated with obstacles, through to dense population with obstacles. The results obtained by this experiment are presented in the following section.
