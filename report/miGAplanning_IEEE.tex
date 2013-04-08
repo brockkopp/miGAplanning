@@ -37,7 +37,7 @@
 \usepackage{url}
 \usepackage{amsmath}
 \usepackage{stfloats}
-\usepackage{placeins}
+\usepackage[section]{placeins}
 
 \usepackage{graphicx}
 \usepackage{epstopdf}
@@ -182,23 +182,21 @@
 
 \section{Introduction} \label{sec:introduction}
 \input{./sections/introduction.tex}
-\FloatBarrier
 
 \section{Background Review} \label{sec:background}
 \input{./sections/background.tex}
-\FloatBarrier
 
 \section{Method} \label{sec:method}
 \input{./sections/method.tex}
-\FloatBarrier
 
 \section{Results} \label{sec:results}
 \input{./sections/results.tex}
-\FloatBarrier
 
 \section{Discussion} \label{sec:discussion}
 \input{./sections/discussion.tex}
-\FloatBarrier
+
+\section{Conclusions}
+\lipsum[1]
 
 \section{Conclusions} \label{sec:conclusions}
 \input{./sections/conclusions.tex}
