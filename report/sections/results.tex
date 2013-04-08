@@ -20,9 +20,11 @@ Figure \ref{fig:result} shows a visualization of 40 trials conducted on five sta
 The results of the experiment are presented in table \ref{tbl:results}.
 number of trials run: 600
 
-{\renewcommand{\arraystretch}{1.4}
-	\begin{center}
-		\begin{table}[h]
+\begin{table}
+\renewcommand{\arraystretch}{1.3}
+\caption{Results obtained through 600 trials of the path finding algorithm.}
+\label{table_example}
+\begin{center}
 		\begin{tabular}{ c | c  c  p{2cm} }
 		Criteria & Result & Unit & Note \\ \hline
 		Path length & 0.7 & \% longer & Compared to wavefront method \\ 
@@ -31,10 +33,8 @@ number of trials run: 600
 		Average number of generations & 12.3 & generations & \\ 
 		Freq. of collision free path & 94 & \% &  \\ 
 		Jerk improvement & 194 & ${{D}\over{T^3}}$ & Compared to implementation not minimizing jerk.\\ 
-		\end{tabular}
-		\caption{Results obtained through 600 trials of the path finding algorithm.}
-		\end{table}
-	\end{center}
-}
+\end{tabular}
+\end{center}
+\end{table}
 
 
