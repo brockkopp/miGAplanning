@@ -42,9 +42,11 @@ end
 
 resLen = zeros(numTests,6);
 
-diffMatrix = zeros(length(gaData1(:,1)),2);
+diffMatrix = zeros(length(gaData1(:,1)),4);
 shorterCnt = 0;
 shorterCnt_noJerk = 0;
+noColl = 0;
+noColl_noJerk = 0;
 
 for testNum=1:numTests
 
@@ -70,12 +72,27 @@ for testNum=1:numTests
             diffMatrix(startIdx+j-1,1) = gaData1(startIdx+j-1,7) / wfData(wfIdx,3);
             diffMatrix(startIdx+j-1,2) = gaData2(startIdx+j-1,7) / wfData(wfIdx,3);
             
+            if gaData2(startIdx+j-1,9) == 0
+                diffMatrix(startIdx+j-1,3) = 0;
+            else
+                diffMatrix(startIdx+j-1,3) = gaData1(startIdx+j-1,9) / gaData2(startIdx+j-1,9);
+            end
+            
+            
             if(gaData1(startIdx+j-1,7) < wfData(wfIdx,3))
                 shorterCnt = shorterCnt +1;
             end
             if(gaData2(startIdx+j-1,7) < wfData(wfIdx,3))
                 shorterCnt_noJerk = shorterCnt_noJerk +1;
             end
+            
+            if(gaData1(startIdx+j-1,8) == 0)
+                noColl = noColl + 1;
+            end
+            if(gaData2(startIdx+j-1,8) == 0)
+                noColl_noJerk = noColl_noJerk + 1;
+            end
+            
         end
     end
 
@@ -101,8 +118,21 @@ end
 % stdDiff = mean(diffMatrix(:,1))
 % stdDiff_noJerk = mean(diffMatrix(:,2))
 fprintf('\n\tRESULTS \n\n');
-fprintf('Std:\t shorter  \t\t\t%d of %d\n',shorterCnt, length(gaData1(:,1)))
-fprintf('Std:\t Mean difference:  \t%d\n', mean(diffMatrix(:,1)))
+fprintf('Std:\t shorter  \t\t\t\t%d of %d\n', shorterCnt, length(gaData1(:,1)))
+fprintf('Std:\t Mean difference:  \t\t%d\n', mean(diffMatrix(:,1)))
+fprintf('Std:\t Col''n free:   \t\t\t%d of %d\n', noColl, length(gaData1(:,1)))
+fprintf('Std:\t Mean max jerk comp:  \t%d\n', mean(diffMatrix(:,3)))
+fprintf('Std:\t Mean comp time:  \t\t%d\n', mean(gaData1(:,12)))
+fprintf('Std:\t Mean num generations:  %d\n', mean(gaData1(:,10)))
+fprintf('Std:\t Std Dev generations:  %d\n', std(gaData1(:,10)))
+
+
 fprintf('\n');
-fprintf('NoJerk:\t shorter  \t\t\t%d of %d\n',shorterCnt_noJerk, length(gaData1(:,1)))
-fprintf('NoJerk:\t Mean difference:  \t%d\n', mean(diffMatrix(:,2)))
+fprintf('NoJerk:\t shorter  \t\t\t\t%d of %d\n',shorterCnt_noJerk, length(gaData1(:,1)))
+fprintf('NoJerk:\t Col''n free:   \t\t\t%d of %d\n', noColl_noJerk, length(gaData1(:,1)))
+fprintf('NoJerk:\t Mean difference:  \t\t%d\n', mean(diffMatrix(:,2)))
+fprintf('NoJerk:\t Mean comp time:  \t\t%d\n', mean(gaData2(:,12)))
+fprintf('NoJerk:\t Mean num generations:  %d\n', mean(gaData2(:,10)))
+fprintf('NoJerk:\t Std Dev generations:  %d\n', std(gaData2(:,10)))
+
+
