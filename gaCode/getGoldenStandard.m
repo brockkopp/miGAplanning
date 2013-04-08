@@ -7,7 +7,7 @@ cSpace4 = importdata(strcat('../configSpace/',  'obsGrid.mat'));
 
 points = results(:, 14:17);
 cSpaceId = results(:, 1);
-[numRows numCols] = size(points);
+[numRows, numCols] = size(points);
 
 pathLengths = ones(length(points), 1);
         
