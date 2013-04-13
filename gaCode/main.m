@@ -1,12 +1,17 @@
+runNumber = 0;
+while (true)
+    runNumber = runNumber + 1;
+
 % reference http://www.mathworks.com/help/gads/genetic-algorithm-options.html
 close all
 
-simName = 'baseline_7500';
+simName = 'longtest';
 simdir = strcat('sim_', simName);
 mkdir(simdir);
 
-f = fopen(strcat(simdir,'/gaData.mat'), 'w');
-fclose(f);
+fileName = strcat('gaData', int2str(runNumber),'_',datestr(now,'dd.mm.yyyy-HH.MM.SS'));
+% f = fopen(strcat(simdir,'/', fileName, '.mat'), 'w');
+% fclose(f);
 
 %% Simulation Params
 numCspaces = 3;
@@ -229,7 +234,7 @@ for cSpaceIteration = 1:numCspaces
         fitnessValue = Fval;
         outputData(j,:) = [cSpaceID pointSetID x solutionLength dcoll maxJerk numGenerations fitnessValue gaLengthTime PopulationSize startPt endPt];
         end
-    save(strcat(simdir,'/gaData.txt'), 'outputData', '-ASCII', '-append');
+    save(strcat(simdir,'/', fileName, '.txt'), 'outputData', '-ASCII', '-append');
 
     end
     figname = strcat(simdir, '/' ,cSpaceFilenames(cSpaceIteration,:), '.fig');
@@ -237,4 +242,6 @@ for cSpaceIteration = 1:numCspaces
 end
 %outputData(1, :) = ['cSpaceID' 'pointSetID'  'A' 'B' 'C' 'D 'solutionLength' 'numCollisions' 'maxJerk' 'numGenerations' 'fitnessValue' 'gaLengthTime' 'populationSize' 'startPtX' 'startPtY' 'endPtX' 'endPtY'];
 
-disp '_Done'
+strcat('_Done',int2str(runNumber),'\n')
+
+end
