@@ -3,14 +3,12 @@
 	% -Forward reference evidence from a claim
 	% -Present the experiments
 	% -Analyze raw data
-	
 % OUTLINE
 	% - Setup
 		% - Criteria (Fitness)
 			% - Distance (low weight since it doesn't really matter)
 			% - Obstacle avoidance (Hight weight, mission critical)
 			% - Minimize jerk (Mid weight)
-		
 		% - Touch breifly on encoding
 			% - High order polynomial
 			% - Chromozome - integer encoding
@@ -25,9 +23,7 @@
 			% - Diversity convergence
 			% - Or top half not coliding.
 			% - Which worked out, why didn't the other?
-			
-		
-	% - run with randomly generated environments (or at least 
+	% - run with randomly generated environments (or at least
 		% - 1-5 objects
 		% - placed randomly w/o overlap
 		% - varying but constrained size
@@ -36,7 +32,7 @@
 		% - analyze data
 		% - store data (map and the resultant path)
 %
-The Genetic Algorithm (GA) formed the basis for the experiments. Significant effort was expended setting up the GA in advance of testing, since without a well\-structured algorithm, the testing was sure to show poor results. The GA was implemented on Matlab, using the built\-in GA libraries in order to avoid unnecessary development. While the base functionality was used, there remained many design considerations.
+The Genetic Algorithm (GA) formed the basis for the experiments. Significant effort was expended setting up the GA in advance of testing, since without a well-structured algorithm, the testing was sure to show poor results. The GA was implemented on Matlab, using the built-in GA libraries in order to avoid unnecessary development. While the base functionality was used, there remained many design considerations.
 
 \subsection{Criteria and Fitness}
 The aim of the implementation was to produce a path which minimized the obstacle collisions, length and jerk of the path represented by a polynomial function. The fitness of an individual was based on an equation considering these three criteria.
@@ -52,7 +48,7 @@ Commanding a robotic manipulator's position is complicated by the fact that it c
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=3.5in]{./figures/wp2cs.eps}
+	\includegraphics[width=\figWidth]{./figures/wp2cs.eps}
 	\caption{Conversion from robot workspace to configuration space }
 	\label{fig:ws2cs}
 \end{figure}
@@ -60,7 +56,7 @@ Commanding a robotic manipulator's position is complicated by the fact that it c
 In the configuration space, robot trajectories can be easily identified by either a human or a motion planning algorithm. This angle-angle plot can then be used to implement a polynomial trajectory, of which optimal coefficients can easily be solved using a Genetic Algorithm. The parameterized trajectory is denoted in Equation \ref{eq:polyTraj}.
 
 \subsection{Population Initialization}
-The population was randomly initialized with coefficient values in the range of \-100 to 100. This range was imposed on the coefficients as it was found to provide a good compromise between promoting function manipulation while at the same time keeping it under control so that changes to coefficients did not make too drastic a change to the shape of the path.
+The population was randomly initialized with coefficient values in the range of -100 to 100. This range was imposed on the coefficients as it was found to provide a good compromise between promoting function manipulation while at the same time keeping it under control so that changes to coefficients did not make too drastic a change to the shape of the path.
 
 The population size was chosen to be 75. This population number was found to provide the necessary diversity in the population. Lower population values were found to converge to non-ideal solutions.
 
@@ -79,7 +75,7 @@ A_{eq}x = b_{eq}
 where x are the variables being optimized. For this project, the optimization variables are the coefficients of the polynomial.
 
 For example, a second order polynomial $y = A + Bx + Cx^2$ through points $[1 2]$ and $[10 5]$ would have linear constraints of the form:
-\begin{equation} 
+\begin{equation}
 	\begin{bmatrix}
 	1 & 10 & 10^2 \\
 	1 & 5 & 5^2
@@ -88,7 +84,7 @@ For example, a second order polynomial $y = A + Bx + Cx^2$ through points $[1 2]
 	A \\
 	B \\
 	C \\
-	\end{bmatrix} = 
+	\end{bmatrix} =
 	\begin{bmatrix}
 	10 \\
 	5 \\
