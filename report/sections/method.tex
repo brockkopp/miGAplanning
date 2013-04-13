@@ -32,7 +32,7 @@
 		% - analyze data
 		% - store data (map and the resultant path)
 %
-The Genetic Algorithm (GA) was the subject of the experiments. Significant effort was expended setting up the GA in advance of testing, since without a well-structured algorithm, the testing was sure to show poor results. The GA was implemented in Matlab, using the built-in GA libraries in order to avoid unnecessary development. While the base functionality was used, there remained many design considerations.
+The Genetic Algorithm (GA) was the subject of the experiments. Significant effort was expended setting up the GA in advance of testing, since without a well-structured algorithm, the testing was sure to show poor results. The GA was implemented in MATLAB, using the built-in GA libraries in order to avoid unnecessary development. While the base functionality was used, there remained many design considerations.
 
 \subsection{Criteria and Fitness}
 The aim of the implementation was to produce a path which minimized obstacle collisions, length and jerk of the path represented by a polynomial function. The fitness of an individual was based on an equation considering these three criteria.
@@ -57,7 +57,7 @@ In the configuration space, robot trajectories can be easily identified by eithe
 
 \subsection{Population Initialization}
 
-The population was randomly initialized with coefficient values in the range of -500 to 500. This range was imposed on the coefficients as it was found to provide a good compromise between promoting function varyation while at the same time keeping it mitigated enough so that changes to coefficients each generation did not make too drastic a change to the shape of the path.
+The population was randomly initialized with coefficient values in the range of -500 to 500. This range was imposed on the coefficients as it was found to provide a good compromise between promoting function variation while at the same time keeping it mitigated enough so that changes to coefficients each generation did not make too drastic a change to the shape of the path.
 
 The population size was chosen to be 75, after research found that exiting solutions consistently used a population range of approximately 50-100 \cite{gulsen95}. This population number provides the necessary diversity in the population. Lower population values were found to converge to non-ideal solutions. 
 
