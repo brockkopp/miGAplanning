@@ -5,7 +5,7 @@
 	% ?Methods (reference and brief description)
 	% ?Proposed approach: algorithm
 	% ?Equations and formulas
-
+%
 Path planning is an active area of research due to the complexity of the problem and the need for a robust solution applicable to various environments. Many algorithms exist, but none of the proposed algorithms are capable of encompassing all the problem constraints for various environments \cite{sariff06}.
 
 Existing path planning solutions include reactive motion planning algorithms, graph and probabilistic based motion planning, and optimization based planning \cite{waslanderI}. Each of these has advantages and disadvantages with regards to planning a route through a robot's configuration space. Reactive planning algorithms such as potential field and wavefront methods are simple in concept however these are local approach methods and do not consider dynamic constraints. Some are inherently susceptible to local minima, making them unacceptable for obstacle avoidance \cite{koren91}. The wavefront method is designed to find the shortest path, and as such will be used as the benchmark against which results from the suggested algorithm will be measured. It is expected that while the suggested algorithm will generate a longer path, the dynamic constraints will be satisfied unlike in the wavefront solution.

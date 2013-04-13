@@ -4,8 +4,8 @@
 	 % - Present the general case
 	% 2.State your contributions
 		% -Present a list of contributions
-
 Path planning is a critical component of navigation technology, a fundamental area in robotics research. Verifying path safety is critical for both the welfare of the robot as well as its surrounding environment, which can contain people or valuable infrastructure. The path must ultimately reach its destination while satisfying specified criteria, the most common of which is distance (or time). Another important criterion is path dynamics, where the forces and other dynamic characteristics of the robot are considered. Excessive acceleration and jerk cause stress on the robotic manipulator as well as robot tracking characteristics which are often a function of acceleration. These criteria are accounted for by relatively few common path planning algorithms \cite{elshamli04}.
+
 
 Path planning techniques can be applied to industrial robotic manipulators to ensure efficient operation while maneuvering safely in the environment. Articulated manipulators are bounded to their configuration workspace, which is a two-dimensional representation of their allowable motion range \cite{kavraki96}. Frequently used algorithms for motion planning include probabilistic roadmaps, potential field methods, and neural network approaches \cite{sharir89,khosla88,rimon92,yang00}. Since every robot has a unique and complex task and environment, a robust solution is necessary. Genetic algorithms are especially suited for such complex optimization problems \cite{renner03}.
 
@@ -16,7 +16,7 @@ The robot's environment and obstacles will be represented in a discretized grid,
 While there is no absolute best path planning algorithm for all situations, it is proposed that:
 \begin{itemize}
 	\item A Genetic Algorithm can effectively plan a path through a robotic manipulator's configuration space.
-	\item The algorithm presented can plan a path which not only minizes distace travelled, but also account for robotic manipulator dynamics such as acceleration and jerk.
+	\item The algorithm presented can plan a path which not only minimizes distance travelled, but also account for robotic manipulator dynamics such as acceleration and jerk.
 	\item The algorithm can identify a viable solution which is within XXXX\% of the shortest distance as determined using a deterministic algorithm such as wavefront, but in much less time.
 \end{itemize}
 
