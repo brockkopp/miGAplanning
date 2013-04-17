@@ -73,13 +73,13 @@ To solve this constrained optimization problem, linear equality constraints are 
 A_{eq}x = b_{eq}
 \end{equation}
 
-where x is a vector of the variables being optimized. For this project, the optimization variables are the coefficients of the polynomial.
+Where x is a vector of the variables being optimized. For this project, the optimization variables are the coefficients of the polynomial.
 
-For example, a second order polynomial $y = A + Bx + Cx^2$ through points $[1 2]$ and $[10 5]$ would have linear constraints of the form:
+For example, a second order polynomial $y = A + Bx + Cx^2$ through points $[2 , 4]$ and $[10 , 5]$ would have linear constraints of the form:
 \begin{equation}
 	\begin{bmatrix}
 	1 & 10 & 10^2 \\
-	1 & 5 & 5^2
+	1 & 2 & 2^2
 	\end{bmatrix}
 	\begin{bmatrix}
 	A \\
@@ -87,8 +87,8 @@ For example, a second order polynomial $y = A + Bx + Cx^2$ through points $[1 2]
 	C \\
 	\end{bmatrix} =
 	\begin{bmatrix}
-	10 \\
 	5 \\
+	4 \\
 	\end{bmatrix}
 \end{equation}
 
