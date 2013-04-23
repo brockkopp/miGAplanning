@@ -4,8 +4,6 @@
 
 % Purpose: Executes genetic algorim to determine path across pre-defined envrionment. Used to collect datasets.
 
-close all;
-
 % Initialize file variables
 simName = 'longtest';
 simdir = strcat('sim_', simName);
@@ -47,7 +45,7 @@ fitnessScalingFunction = @fitscalingprop;
 tournamentSize = 2;
 selectionFunction = {@selectiontournament, tournamentSize};
 
-%% Setup Plot
+% Setup Plot
 cSpaceFilenames = [ 'cSpace2',
                     'cSpace3',
                     'cSpace4',
@@ -76,7 +74,7 @@ for cSpaceIteration = 1:numCspaces
     fpath = strcat('../configSpace/',  cSpaceFilenames(cSpaceIteration,:), '.mat')
     obsGrid = importdata(fpath);
 
-	% Plot environment
+% Plot environment
     mapPlot = figure;
     hold on;
     [xDim yDim] = size(obsGrid);
@@ -84,27 +82,27 @@ for cSpaceIteration = 1:numCspaces
     image(100*(1-obsGrid)');
     colormap(gray);
 
-	% Iterate through each start/end point configuration
+% Iterate through each start/end point configuration
     for pointsIteration = 1:numPointSets
     pointSetID = pointsIteration;
     cSpace = obsGrid;
     startPt = [pointSetVector(pointsIteration*2-1 + (cSpaceIteration-1)*10, 1), pointSetVector(pointsIteration*2-1 + (cSpaceIteration-1)*10, 2)];
     endPt =   [pointSetVector(pointsIteration*2 + (cSpaceIteration-1)*10, 1), pointSetVector(pointsIteration*2 + (cSpaceIteration-1)*10, 2)];
 
-	% Plot start/end points
+% Plot start/end points
     figure(mapPlot);
     plot(startPt(1), startPt(2), 'g*', 'MarkerSize',6);
     plot(endPt(1), endPt(2), 'g*', 'MarkerSize',6);
 
     t = startPt(1):0.1:endPt(1);
 
-		% Repeat algorithm execution for dataset
+% Repeat algorithm execution for dataset
         for j=1:numSimulations
 
-        % Number of variables in chromosome
+% Number of variables in chromosome
         nvars = 4;
 
-        % Coefficient (Gene) cosntraints
+% Coefficient (Gene) cosntraints
         low = zeros(nvars,1);
         upp = zeros(nvars,1);
         range = zeros(2,nvars);
@@ -120,7 +118,7 @@ for cSpaceIteration = 1:numCspaces
         end
         PopulationInitializationRange = range;
 
-        %% Linear Equalities
+% Linear Equalities
         x1 = startPt(1);
         x2 = endPt(1);
         y1 = startPt(2);
@@ -134,7 +132,7 @@ for cSpaceIteration = 1:numCspaces
 
         b_linEq = [y1; y2];
 
-        % Define GA options
+% Define GA options
         options = gaoptimset('PopInitRange',range);
         options = gaoptimset(options,'PopulationSize',PopulationSize);
         options = gaoptimset(options,'PopInitRange',PopulationInitializationRange);
@@ -148,12 +146,12 @@ for cSpaceIteration = 1:numCspaces
         options = gaoptimset(options,'EliteCount', eliteCount);
         options = gaoptimset(options,'FitnessScalingFcn', fitnessScalingFunction);
 		
-		% Execute GA
+% Execute GA
         tic;
         [x, Fval, exitFlag, Output] = ga(@(x) AKfitness(x,startPt, endPt, obstacleWeight, lengthWeightFactor, jerkWeight, lineResolution, j),nvars,[],[],A_linEq,b_linEq,low,upp,[],[],options);
         gaLengthTime = toc;
 		
-		% Print GA results
+% Print GA results
         fprintf('Fitness Value = %g\n', Fval);
         fprintf('Generations   = %g\n', Output.generations);
         format short;
@@ -170,8 +168,8 @@ for cSpaceIteration = 1:numCspaces
         ddist = 0;
         dcoll = 0;
 		
-		% Evaluate path
-        y2 = @(t) sqrt(1 + (B + 2*C*t + 3*D*t.^2).^2); % (B^2 + 1) + (4*B*C)*t + (4*C^2)*t.^2);
+% Evaluate path
+        y2 = @(t) sqrt(1 + (B + 2*C*t + 3*D*t.^2).^2);
         ddist = integral(y2, startPt(1), endPt(1)) * lengthWeightFactor;
         solutionLength = ddist;
         for i=startPt(1):lineResolution:endPt(1)
@@ -193,23 +191,23 @@ for cSpaceIteration = 1:numCspaces
 
         maxJerk = djerk;
 
-		% Plot trajectory
+% Plot trajectory
         figure(mapPlot);
         hold on;
         plot(t,x(1)+x(2)*t + x(3)*t.^2 + x(4)*t.^3, colors(pointsIteration));
-
-		% Save GA/path results
+		
+% Save GA/path results
         numGenerations = Output.generations;
         fitnessValue = Fval;
         outputData(j,:) = [cSpaceID pointSetID x solutionLength dcoll maxJerk numGenerations fitnessValue gaLengthTime PopulationSize startPt endPt];
         end
 		
-	% Save results file
+% Save results file
     save(strcat(simdir,'/', fileName, '.txt'), 'outputData', '-ASCII', '-append');
 
     end
 	
-	% Save path figure
+% Save path figure
     figname = strcat(simdir, '/' ,cSpaceFilenames(cSpaceIteration,:), '.fig');
     saveas(figure(cSpaceIteration), figname);
 end
