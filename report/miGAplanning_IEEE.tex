@@ -42,7 +42,9 @@
 \usepackage{array}
 \usepackage{graphicx}
 \usepackage{epstopdf}
-\newcommand{\figWidth}{0.47\textwidth}
+\newcommand{\figWidth}{0.5\textwidth}
+
+\usepackage{listings}	% Insert raw code
 
 
 %\usepackage{subfigure} % Written by Steven Douglas Cochran
@@ -274,6 +276,10 @@
 
 \bibliographystyle{IEEEtran}
 \bibliography{miGAplanning}
+
+
+\section{Appexdix - Code} \label{sec:code}
+\lstinputlisting[language=Matlab,breaklines=true]{./sections/main.m}
 
 % that's all folks
 \end{document} 

@@ -8,7 +8,7 @@
 %
 Path planning is an active area of research due to the complexity of the problem and the need for a robust solution applicable to various environments. Many algorithms exist, but none of the proposed algorithms are capable of encompassing all the problem constraints for all environments \cite{sariff06}.
 
-Existing path planning solutions include reactive motion planning algorithms, graph and probabilistic based motion planning, and optimization based planning \cite{waslanderI}. Each of these has advantages and disadvantages with regards to planning a route through a robot's environment. Reactive planning algorithms such as potential field and wavefront methods are simple in concept however these are local approach methods and do not consider dynamic constraints. Some are inherently susceptible to local minima, making them unacceptable for obstacle avoidance \cite{koren91}. 
+Existing path planning solutions include reactive motion planning algorithms, graph and probabilistic based motion planning, and optimization based planning \cite{waslanderI}. Each of these has advantages and disadvantages with regards to planning a route through a robot's environment. Reactive planning algorithms such as potential field and wavefront methods are simple in concept however these are local approach methods and do not consider dynamic constraints. Some are inherently susceptible to local minima, making them unacceptable for obstacle avoidance \cite{koren91}.
 
 The wavefront method is designed to find the absolute shortest path, and as such will be used as the benchmark against which results from the suggested algorithm will be measured. It is expected that while the suggested algorithm will generate a longer path, the dynamic constraints will be satisfied, unlike the results of the wavefront solution.
 
@@ -28,6 +28,13 @@ Research has already been done regarding the application of the parallel heurist
 
 Testing will be performed by creating random environments containing arbitrarily placed objects. The algorithm will then plot a trajectory between a randomly defined start and end point. Many iterations of these tests will be performed in a variety of environments in order to accurately determine the effectiveness of this algorithm. The average path distance for each environment will be compared to the minimum distance as calculated by a Wavefront algorithm \cite{waslanderI}.
 
-The wavefront algorithm is a deterministic algorithm which is capable of finding the shortest path between two points through a discretized environment. This will provide a ``gold standard'' which can be used to evaluate the performance of the genetic algorithm. The wavefront implementation used in this study permits  only 90 or 45 degree turns through the environment. Since the genetic algorithm is a stochastic search, it will not result in an identical path twice. As such all results will be presented as averages and their associated distributions.
+The wavefront algorithm is a deterministic algorithm which is capable of finding the shortest path between two points through a discretized environment. This will provide a ``gold standard'' which can be used to evaluate the performance of the genetic algorithm. The wavefront implementation used in this study permits  only 90 or 45 degree turns through the environment. A sample trajectory defined by a wavefront algorithm is presented in Figure \ref{fig:wfSol}. Since the genetic algorithm is a stochastic search, it will not result in an identical path twice. As such all results will be presented as averages and their associated distributions.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\figWidth]{./figures/wavefrontSol.eps}
+	\caption{The path as determined by the wavefront algorithm used to evaluate the performance of the genetic algorithm. The origin of the path is denoted by the darker blue, and the ``wave'' propogation is shown by increasingly light blue coloured cells.}
+	\label{fig:wfSol}
+\end{figure}
 
 The result will be a global path planning algorithm functional in a static environment. Dynamic environments are possible with the proposed algorithm, however computational efficiency must be optimized in order to minimize the time required to find the solution. This new application offers a simple way to determine a path while taking into consideration all the defined path criteria.
