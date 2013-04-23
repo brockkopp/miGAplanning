@@ -78,8 +78,7 @@ pointSetVector = [  7, 104; 349, 112;
 %                   23 , 329; 60 , 329;
 %                   9  , 90;  59 , 15;
 %                   36 , 268; 48 , 13;]
-                  
-                  
+        return      
 
 for cSpaceIteration = 1:numCspaces
     
